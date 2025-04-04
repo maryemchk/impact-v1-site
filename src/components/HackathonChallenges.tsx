@@ -94,14 +94,14 @@ const challenges: Challenge[] = [
 const HackathonChallenges = () => {
   const [revealed, setRevealed] = useState(false);
   const [canReveal, setCanReveal] = useState(false);
-  const [countdown, setCountdown] = useState<string>('');
+  const [countdownText, setCountdownText] = useState<string>('');
   const { toast } = useToast();
 
   // Check if the current date is April 20, 2025 (day of the hackathon)
   useEffect(() => {
     const checkDate = () => {
       const now = new Date();
-      const hackathonDate = new Date(2025, 3, 20); // April 20, 2025 (month is 0-indexed)
+      const hackathonDate = new Date(2025, 3, 20, 0, 0, 0); // April 20, 2025 (month is 0-indexed)
       
       // Set canReveal to true if it's the day of the hackathon
       const isHackathonDay = now.getFullYear() === hackathonDate.getFullYear() &&
@@ -115,16 +115,19 @@ const HackathonChallenges = () => {
         const diffTime = hackathonDate.getTime() - now.getTime();
         const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
         const diffHours = Math.floor((diffTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const diffMinutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
         
-        setCountdown(`${diffDays} days, ${diffHours} hours until challenges are revealed`);
+        setCountdownText(`Challenges will be revealed in ${diffDays} days, ${diffHours} hours, ${diffMinutes} minutes`);
       } else if (hackathonDate < now) {
-        setCountdown('Hackathon has ended');
+        setCountdownText('Hackathon has ended');
+      } else {
+        setCountdownText('Challenges are ready to be revealed!');
       }
     };
 
     checkDate();
-    // Update the countdown every hour
-    const interval = setInterval(checkDate, 1000 * 60 * 60);
+    // Update the countdown every minute for more accurate timing
+    const interval = setInterval(checkDate, 1000 * 60);
     
     return () => clearInterval(interval);
   }, []);
@@ -168,8 +171,8 @@ const HackathonChallenges = () => {
             <div className="inline-block mb-8">
               <Lock className="h-20 w-20 text-cyber-purple animate-pulse mx-auto" />
               <p className="mt-4 text-xl">Challenges are currently locked</p>
-              {!canReveal && countdown && (
-                <p className="mt-2 text-cyber-blue">{countdown}</p>
+              {!canReveal && countdownText && (
+                <p className="mt-2 text-cyber-blue font-semibold">{countdownText}</p>
               )}
             </div>
             
