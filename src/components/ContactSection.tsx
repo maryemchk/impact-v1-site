@@ -1,7 +1,6 @@
-
 import React, { useState } from 'react';
 import { useToast } from "@/hooks/use-toast";
-import { Send, Mail, Instagram, Facebook, GitHub, Linkedin, Twitter } from 'lucide-react';
+import { Send, Mail, Instagram, Facebook, Github, Linkedin, Twitter } from 'lucide-react';
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -166,7 +165,7 @@ const ContactSection = () => {
                   <Linkedin className="h-6 w-6 text-cyber-purple" />
                 </a>
                 <a href="#" className="p-3 border border-cyber-purple-glow rounded-full hover:bg-cyber-purple hover:bg-opacity-20 transition-colors">
-                  <GitHub className="h-6 w-6 text-cyber-purple" />
+                  <Github className="h-6 w-6 text-cyber-purple" />
                 </a>
               </div>
               
