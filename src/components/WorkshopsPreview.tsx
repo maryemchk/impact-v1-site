@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Code2, Database, Globe, HardDrive, Shield, Cpu } from 'lucide-react';
 
 interface WorkshopCard {
@@ -56,39 +56,47 @@ const workshops: WorkshopCard[] = [
 ];
 
 const WorkshopsPreview = () => {
-  const [countdownValue] = useState<number>(1680019200000);
   const [activeCard, setActiveCard] = useState<number | null>(null);
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0
+  });
   
-  const calculateTimeLeft = () => {
-    const difference = countdownValue - new Date().getTime();
-    let timeLeft = {
-      days: 0,
-      hours: 0,
-      minutes: 0,
-      seconds: 0
+  useEffect(() => {
+    const calculateTimeLeft = () => {
+      // April 20, 2025 - Hackathon day
+      const targetDate = new Date(2025, 3, 20).getTime();
+      const now = new Date().getTime();
+      const difference = targetDate - now;
+      
+      if (difference > 0) {
+        return {
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+          minutes: Math.floor((difference / 1000 / 60) % 60),
+          seconds: Math.floor((difference / 1000) % 60)
+        };
+      }
+      return {
+        days: 0,
+        hours: 0,
+        minutes: 0,
+        seconds: 0
+      };
     };
 
-    if (difference > 0) {
-      timeLeft = {
-        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((difference / 1000 / 60) % 60),
-        seconds: Math.floor((difference / 1000) % 60)
-      };
-    }
+    // Initial calculation
+    setTimeLeft(calculateTimeLeft());
 
-    return timeLeft;
-  };
-
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
-
-  React.useEffect(() => {
-    const timer = setTimeout(() => {
+    // Update every second
+    const timer = setInterval(() => {
       setTimeLeft(calculateTimeLeft());
     }, 1000);
 
-    return () => clearTimeout(timer);
-  });
+    return () => clearInterval(timer);
+  }, []);
 
   const handleCardHover = (id: number) => {
     setActiveCard(id);
@@ -144,7 +152,8 @@ const WorkshopsPreview = () => {
         </div>
         
         <div className="mt-16 text-center">
-          <p className="text-lg mb-4">Full Workshop Details Revealed In:</p>
+          <p className="text-lg mb-4">Full Workshop Details & Challenges Will Be Revealed On:</p>
+          <p className="text-cyber-purple mb-6">April 20, 2025 (Hackathon Day)</p>
           <div className="flex justify-center gap-4">
             <div className="cyber-card p-3 w-20">
               <div className="text-2xl font-orbitron text-cyber-blue">{timeLeft.days}</div>
