@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { 
   Lock, Unlock, Cpu, Cloud, HardDrive, 
@@ -93,9 +93,52 @@ const challenges: Challenge[] = [
 
 const HackathonChallenges = () => {
   const [revealed, setRevealed] = useState(false);
+  const [canReveal, setCanReveal] = useState(false);
+  const [countdown, setCountdown] = useState<string>('');
   const { toast } = useToast();
 
+  // Check if the current date is April 20, 2025 (day of the hackathon)
+  useEffect(() => {
+    const checkDate = () => {
+      const now = new Date();
+      const hackathonDate = new Date(2025, 3, 20); // April 20, 2025 (month is 0-indexed)
+      
+      // Set canReveal to true if it's the day of the hackathon
+      const isHackathonDay = now.getFullYear() === hackathonDate.getFullYear() &&
+                             now.getMonth() === hackathonDate.getMonth() &&
+                             now.getDate() === hackathonDate.getDate();
+      
+      setCanReveal(isHackathonDay);
+
+      // Calculate and format countdown if it's not the hackathon day yet
+      if (!isHackathonDay && hackathonDate > now) {
+        const diffTime = hackathonDate.getTime() - now.getTime();
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        const diffHours = Math.floor((diffTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        
+        setCountdown(`${diffDays} days, ${diffHours} hours until challenges are revealed`);
+      } else if (hackathonDate < now) {
+        setCountdown('Hackathon has ended');
+      }
+    };
+
+    checkDate();
+    // Update the countdown every hour
+    const interval = setInterval(checkDate, 1000 * 60 * 60);
+    
+    return () => clearInterval(interval);
+  }, []);
+
   const handleReveal = () => {
+    if (!canReveal) {
+      toast({
+        title: "Cannot Reveal Yet",
+        description: "Challenges will be revealed on April 20, 2025 (Hackathon Day).",
+        variant: "destructive",
+      });
+      return;
+    }
+
     // Play unlock sound
     const audio = new Audio('/unlock-sound.mp3');
     audio.volume = 0.3;
@@ -125,16 +168,23 @@ const HackathonChallenges = () => {
             <div className="inline-block mb-8">
               <Lock className="h-20 w-20 text-cyber-purple animate-pulse mx-auto" />
               <p className="mt-4 text-xl">Challenges are currently locked</p>
+              {!canReveal && countdown && (
+                <p className="mt-2 text-cyber-blue">{countdown}</p>
+              )}
             </div>
             
             <button 
               onClick={handleReveal}
-              className="cyber-btn rounded-sm text-lg bg-cyber-purple bg-opacity-10 border-cyber-purple text-cyber-purple"
+              className={`cyber-btn rounded-sm text-lg ${canReveal 
+                ? 'bg-cyber-purple bg-opacity-10 border-cyber-purple text-cyber-purple' 
+                : 'bg-gray-700 bg-opacity-10 border-gray-500 text-gray-500 cursor-not-allowed'}`}
               style={{
-                boxShadow: "0 0 10px rgba(190, 15, 255, 0.5), inset 0 0 10px rgba(190, 15, 255, 0.5)"
+                boxShadow: canReveal 
+                  ? "0 0 10px rgba(190, 15, 255, 0.5), inset 0 0 10px rgba(190, 15, 255, 0.5)"
+                  : "none"
               }}
             >
-              Reveal Challenges
+              {canReveal ? "Reveal Challenges" : "Locked Until Hackathon Day"}
             </button>
           </div>
         ) : (
