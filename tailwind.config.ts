@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,34 +62,82 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				// Custom colors for the tech event
+				"cyber-blue": "#0ff",
+				"cyber-blue-glow": "rgba(0, 255, 255, 0.7)",
+				"cyber-green": "#0f6",
+				"cyber-green-glow": "rgba(0, 255, 102, 0.7)",
+				"cyber-purple": "#be0fff",
+				"cyber-purple-glow": "rgba(190, 15, 255, 0.7)",
+				"dark-gray": "#121212",
+				"darker-gray": "#080808"
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
 			},
+			fontFamily: {
+				'orbitron': ['Orbitron', 'sans-serif'],
+				'exo': ['Exo 2', 'sans-serif']
+			},
 			keyframes: {
 				'accordion-down': {
-					from: {
-						height: '0'
-					},
-					to: {
-						height: 'var(--radix-accordion-content-height)'
-					}
+					from: { height: '0' },
+					to: { height: 'var(--radix-accordion-content-height)' }
 				},
 				'accordion-up': {
-					from: {
-						height: 'var(--radix-accordion-content-height)'
-					},
-					to: {
-						height: '0'
-					}
+					from: { height: 'var(--radix-accordion-content-height)' },
+					to: { height: '0' }
+				},
+				'pulse-glow': {
+					'0%, 100%': { boxShadow: '0 0 15px 5px rgba(0, 255, 255, 0.4)' },
+					'50%': { boxShadow: '0 0 25px 10px rgba(0, 255, 255, 0.7)' }
+				},
+				'text-glow': {
+					'0%, 100%': { textShadow: '0 0 10px rgba(0, 255, 255, 0.7), 0 0 20px rgba(0, 255, 255, 0.5)' },
+					'50%': { textShadow: '0 0 15px rgba(0, 255, 255, 0.9), 0 0 30px rgba(0, 255, 255, 0.7)' }
+				},
+				'float': {
+					'0%, 100%': { transform: 'translateY(0)' },
+					'50%': { transform: 'translateY(-10px)' }
+				},
+				'circuit-flow': {
+					'0%': { backgroundPosition: '0% 0%' },
+					'100%': { backgroundPosition: '100% 100%' }
+				},
+				'glitch': {
+					'0%, 100%': { transform: 'translate(0)' },
+					'20%': { transform: 'translate(-5px, 5px)' },
+					'40%': { transform: 'translate(-5px, -5px)' },
+					'60%': { transform: 'translate(5px, 5px)' },
+					'80%': { transform: 'translate(5px, -5px)' }
+				},
+				'rotate-slow': {
+					'0%': { transform: 'rotate(0deg)' },
+					'100%': { transform: 'rotate(360deg)' }
+				},
+				'blink': {
+					'0%, 100%': { opacity: '1' },
+					'50%': { opacity: '0.3' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'pulse-glow': 'pulse-glow 2s infinite ease-in-out',
+				'text-glow': 'text-glow 2s infinite ease-in-out',
+				'float': 'float 5s infinite ease-in-out',
+				'circuit-flow': 'circuit-flow 20s infinite linear',
+				'glitch': 'glitch 0.5s ease-in-out',
+				'rotate-slow': 'rotate-slow 15s linear infinite',
+				'blink': 'blink 2s infinite'
+			},
+			backgroundImage: {
+				'circuit-pattern': "url('/circuit-pattern.svg')",
+				'cyber-grid': 'linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px)',
+				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
 			}
 		}
 	},
