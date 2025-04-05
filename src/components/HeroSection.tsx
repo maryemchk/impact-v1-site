@@ -5,7 +5,7 @@ import { Calendar, MapPin } from 'lucide-react';
 
 const HeroSection = () => {
   const [titleText, setTitleText] = useState("");
-  const fullTitle = "🚀 IT Impact V1.0 – Ignite Innovation! 🔥";
+  const fullTitle = "IT Impact V1.0 – Ignite Innovation!";
   const [index, setIndex] = useState(0);
   const { toast } = useToast();
 
