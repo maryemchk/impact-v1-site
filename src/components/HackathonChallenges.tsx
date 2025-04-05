@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { 
   Lock, Unlock, Cpu, Cloud, HardDrive, 
-  Globe, PieChart, ShieldAlert, Zap
+  Globe, PieChart, ShieldAlert, Zap, Clock
 } from 'lucide-react';
 
 interface Challenge {
@@ -95,6 +95,13 @@ const HackathonChallenges = () => {
   const [revealed, setRevealed] = useState(false);
   const [canReveal, setCanReveal] = useState(false);
   const [countdown, setCountdown] = useState<string>('');
+  const [timeRemaining, setTimeRemaining] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0
+  });
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const { toast } = useToast();
 
   // Check if the current date is April 20, 2025 (day of the hackathon)
@@ -115,16 +122,25 @@ const HackathonChallenges = () => {
         const diffTime = hackathonDate.getTime() - now.getTime();
         const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
         const diffHours = Math.floor((diffTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const diffMinutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
+        const diffSeconds = Math.floor((diffTime % (1000 * 60)) / 1000);
         
-        setCountdown(`${diffDays} days, ${diffHours} hours until challenges are revealed`);
+        setTimeRemaining({
+          days: diffDays,
+          hours: diffHours,
+          minutes: diffMinutes,
+          seconds: diffSeconds
+        });
+        
+        setCountdown(`${diffDays}d ${diffHours}h ${diffMinutes}m until challenges are revealed`);
       } else if (hackathonDate < now) {
         setCountdown('Hackathon has ended');
       }
     };
 
     checkDate();
-    // Update the countdown every hour
-    const interval = setInterval(checkDate, 1000 * 60 * 60);
+    // Update the countdown every second for a more dynamic display
+    const interval = setInterval(checkDate, 1000);
     
     return () => clearInterval(interval);
   }, []);
@@ -152,30 +168,83 @@ const HackathonChallenges = () => {
     });
   };
 
+  const handleCardHover = (id: number | null) => {
+    setHoveredCard(id);
+    
+    // Play hover sound
+    if (id !== null && revealed) {
+      const audio = new Audio('/hover-sound.mp3');
+      audio.volume = 0.1;
+      audio.play().catch(err => console.log('Audio playback prevented:', err));
+    }
+  };
+
   return (
-    <section id="hackathon" className="section-padding relative">
-      <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-orbitron font-bold text-center mb-6 text-cyber-purple glow-text-purple">
+    <section id="hackathon" className="section-padding relative overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 opacity-20 pointer-events-none">
+        <div className="absolute top-0 left-0 w-full h-full circuit-background"></div>
+        <div className="absolute top-10 left-10 w-16 h-16 bg-cyber-blue rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-40 right-20 w-32 h-32 bg-cyber-purple rounded-full blur-3xl animate-[pulse_4s_infinite]"></div>
+        <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-cyber-green rounded-full blur-3xl"></div>
+      </div>
+      
+      <div className="max-w-6xl mx-auto relative z-10">
+        <h2 className="text-3xl md:text-5xl font-orbitron font-bold text-center mb-6 text-cyber-purple glow-text-purple before:content-['<'] after:content-['>'] before:opacity-40 after:opacity-40 before:mr-2 after:ml-2">
           Hackathon Challenges
         </h2>
         
-        <p className="text-center text-xl mb-12 max-w-3xl mx-auto">
-          Put your skills to the test with our industry-inspired challenges. Form teams of 2-4 people and build innovative solutions.
+        <p className="text-center text-xl mb-12 max-w-3xl mx-auto leading-relaxed backdrop-blur-sm bg-dark-gray/20 p-4 rounded-lg">
+          Put your skills to the test with our industry-inspired challenges. Form teams of 2-4 people and build innovative solutions that could shape the future.
         </p>
         
         {!revealed ? (
-          <div className="text-center py-20">
-            <div className="inline-block mb-8">
-              <Lock className="h-20 w-20 text-cyber-purple animate-pulse mx-auto" />
-              <p className="mt-4 text-xl">Challenges are currently locked</p>
+          <div className="text-center py-20 backdrop-blur-sm bg-dark-gray/10 border border-cyber-purple/20 rounded-xl p-10 transition-all duration-500 hover:border-cyber-purple/40">
+            <div className="relative mb-12 glitch-container">
+              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-32 bg-cyber-purple/20 rounded-full blur-xl animate-[pulse_3s_infinite]"></div>
+              <Lock className="h-24 w-24 text-cyber-purple animate-pulse mx-auto relative z-10" />
+              <p className="mt-6 text-2xl font-orbitron text-white">Challenges are currently locked</p>
               {!canReveal && countdown && (
-                <p className="mt-2 text-cyber-blue">{countdown}</p>
+                <div className="mt-8">
+                  <div className="flex items-center justify-center gap-4 text-cyber-blue mb-4">
+                    <Clock className="h-5 w-5" />
+                    <span className="text-xl">{countdown}</span>
+                  </div>
+                  
+                  {/* Digital Countdown Display */}
+                  <div className="flex justify-center gap-4 mt-6">
+                    <div className="flex flex-col items-center">
+                      <div className="text-4xl font-mono bg-darker-gray p-3 w-20 rounded-md border border-cyber-blue text-cyber-blue">
+                        {timeRemaining.days.toString().padStart(2, '0')}
+                      </div>
+                      <span className="text-xs mt-1 text-gray-400">DAYS</span>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <div className="text-4xl font-mono bg-darker-gray p-3 w-20 rounded-md border border-cyber-blue text-cyber-blue">
+                        {timeRemaining.hours.toString().padStart(2, '0')}
+                      </div>
+                      <span className="text-xs mt-1 text-gray-400">HOURS</span>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <div className="text-4xl font-mono bg-darker-gray p-3 w-20 rounded-md border border-cyber-blue text-cyber-blue">
+                        {timeRemaining.minutes.toString().padStart(2, '0')}
+                      </div>
+                      <span className="text-xs mt-1 text-gray-400">MINUTES</span>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <div className="text-4xl font-mono bg-darker-gray p-3 w-20 rounded-md border border-cyber-blue text-cyber-green animate-pulse">
+                        {timeRemaining.seconds.toString().padStart(2, '0')}
+                      </div>
+                      <span className="text-xs mt-1 text-gray-400">SECONDS</span>
+                    </div>
+                  </div>
+                </div>
               )}
             </div>
             
             <button 
               onClick={handleReveal}
-              className={`cyber-btn rounded-sm text-lg ${canReveal 
+              className={`cyber-btn text-lg relative overflow-hidden group ${canReveal 
                 ? 'bg-cyber-purple bg-opacity-10 border-cyber-purple text-cyber-purple' 
                 : 'bg-gray-700 bg-opacity-10 border-gray-500 text-gray-500 cursor-not-allowed'}`}
               style={{
@@ -184,21 +253,32 @@ const HackathonChallenges = () => {
                   : "none"
               }}
             >
-              {canReveal ? "Reveal Challenges" : "Locked Until Hackathon Day"}
+              {canReveal ? (
+                <>
+                  <span className="relative z-10">Reveal Challenges</span>
+                  <span className="absolute inset-0 bg-cyber-purple opacity-0 group-hover:opacity-20 transition-opacity duration-300"></span>
+                </>
+              ) : (
+                "Locked Until Hackathon Day"
+              )}
             </button>
           </div>
         ) : (
           <div className="relative">
             <div className="absolute top-0 right-0">
-              <Unlock className="h-8 w-8 text-cyber-purple" />
+              <Unlock className="h-8 w-8 text-cyber-purple animate-pulse" />
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 transition-all duration-1000 ease-in-out">
               {challenges.map((challenge) => (
                 <div 
                   key={challenge.id}
-                  className={`cyber-card ${challenge.color === 'cyber-blue' ? '' : challenge.color === 'cyber-green' ? 'cyber-card-green' : 'cyber-card-purple'} transition-all duration-500 ease-in-out opacity-0 animate-[fadeIn_0.5s_forwards]`}
+                  className={`cyber-card transform transition-all duration-500 ${
+                    hoveredCard === challenge.id ? 'scale-105 -translate-y-2' : ''
+                  } ${challenge.color === 'cyber-blue' ? '' : challenge.color === 'cyber-green' ? 'cyber-card-green' : 'cyber-card-purple'} transition-all duration-500 ease-in-out opacity-0 animate-[fadeIn_0.5s_forwards]`}
                   style={{ animationDelay: `${challenge.id * 0.1}s` }}
+                  onMouseEnter={() => handleCardHover(challenge.id)}
+                  onMouseLeave={() => handleCardHover(null)}
                 >
                   <div className="p-6 glass-effect">
                     <div className={`flex items-center mb-4 text-${challenge.color}`}>
@@ -222,19 +302,33 @@ const HackathonChallenges = () => {
                     <p className="text-sm text-gray-300">
                       {challenge.description}
                     </p>
+                    
+                    <div className={`w-full h-1 mt-4 bg-${challenge.color} bg-opacity-20 rounded-full overflow-hidden`}>
+                      <div 
+                        className={`h-full bg-${challenge.color} transition-all duration-1000 rounded-full`}
+                        style={{ 
+                          width: hoveredCard === challenge.id ? '100%' : '30%',
+                          boxShadow: `0 0 10px ${challenge.color === 'cyber-blue' ? 'rgba(0, 255, 255, 0.7)' : challenge.color === 'cyber-green' ? 'rgba(0, 255, 102, 0.7)' : 'rgba(190, 15, 255, 0.7)'}` 
+                        }}
+                      ></div>
+                    </div>
                   </div>
                 </div>
               ))}
             </div>
             
             <div className="mt-10 text-center">
-              <p className="text-gray-400 text-sm">
-                Note: Additional details, resources, and specific requirements for each challenge will be provided on the day of the hackathon.
+              <p className="text-gray-400 text-sm backdrop-blur-sm bg-dark-gray/20 p-4 rounded-lg inline-block">
+                <span className="text-cyber-purple font-bold">Note:</span> Additional details, resources, and specific requirements for each challenge will be provided on the day of the hackathon.
               </p>
             </div>
           </div>
         )}
       </div>
+      
+      {/* Decorative elements */}
+      <div className="absolute -bottom-10 -right-10 w-40 h-40 rotate-45 border-8 border-cyber-blue/10 rounded-lg"></div>
+      <div className="absolute -top-10 -left-10 w-40 h-40 -rotate-12 border-8 border-cyber-purple/10 rounded-lg"></div>
     </section>
   );
 };
