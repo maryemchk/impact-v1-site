@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { Send, Mail, Instagram, Facebook, Github, Linkedin, Twitter } from 'lucide-react';
@@ -130,8 +129,8 @@ const ContactSection = () => {
                   <Mail className="h-5 w-5 text-cyber-green mr-3 mt-1" />
                   <div>
                     <p className="font-medium">Email:</p>
-                    <a href="mailto:impact@arsii-isimm.org" className="text-gray-300 hover:text-cyber-green transition-colors">
-                      impact@arsii-isimm.org
+                    <a href="mailto:arsii.club.isimm@gmail.com" className="text-gray-300 hover:text-cyber-green transition-colors">
+                      arsii.club.isimm@gmail.com
                     </a>
                   </div>
                 </div>
