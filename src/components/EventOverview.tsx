@@ -11,38 +11,38 @@ interface TimelineEvent {
 
 const timelineEvents: TimelineEvent[] = [
   {
-    time: "09h00 - 09h30",
-    date: "Samedi 19 avril",
-    activity: "Mot d'ouverture",
-    place: "Amphi"
+    time: "09:00 - 09:30",
+    date: "Saturday, April 19",
+    activity: "Opening Ceremony",
+    place: "Amphitheater"
   },
   {
-    time: "09h30 - 12h00",
-    date: "Samedi 19 avril",
+    time: "09:30 - 12:00",
+    date: "Saturday, April 19",
     activity: "Workshops Session 1 (3 Parallel)",
-    place: "les salles"
+    place: "Classrooms"
   },
   {
-    time: "12h00 - 13h30",
-    date: "Samedi 19 avril",
-    activity: "Pause Café + Pause Musicale",
-    place: "Cour ISIMM"
+    time: "12:00 - 13:30",
+    date: "Saturday, April 19",
+    activity: "Coffee Break + Music",
+    place: "ISIMM Courtyard"
   },
   {
-    time: "13h30 - 15h30",
-    date: "Samedi 19 avril",
-    activity: "Workshops Session 2 (3 Parallel)",
-    place: "les salles"
+    time: "13:30 - 15:30",
+    date: "Saturday, April 19",
+    activity: "Workshops Session 2 (2 Parallel)",
+    place: "Classrooms"
   },
   {
-    time: "17h00",
-    date: "Samedi 19 avril",
+    time: "17:00",
+    date: "Saturday, April 19",
     activity: "Start of Competition (Hackathon)",
-    place: "bibliothèque de l'ISIMM"
+    place: "ISIMM Library"
   },
   {
-    time: "08h00",
-    date: "Dimanche 20 avril",
+    time: "08:00",
+    date: "Sunday, April 20",
     activity: "End of Competition",
     place: ""
   }

@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Code2, Database, Globe, HardDrive, Shield, Cpu } from 'lucide-react';
+import { Code2, Database, Globe, Brain, Cpu, Palette } from 'lucide-react';
 
 interface WorkshopCard {
   id: number;
@@ -8,50 +8,55 @@ interface WorkshopCard {
   icon: React.ReactNode;
   color: string;
   description: string;
+  session: string;
+  time: string;
 }
 
 const workshops: WorkshopCard[] = [
   {
     id: 1,
-    title: "AI & ML Workshop",
-    icon: <Cpu className="h-12 w-12" />,
+    title: "Unlocking the Future: Web3 & Blockchain Essentials",
+    icon: <Database className="h-12 w-12" />,
     color: "cyber-blue",
-    description: "Dive into artificial intelligence and machine learning fundamentals. Build and train models for real-world applications."
+    description: "Get started with the revolutionary world of Web3 and Blockchain! Understand the core principles and build your first decentralized mini-project. This workshop is your gateway to the next internet.",
+    session: "Session 1",
+    time: "09:30 → 12:00 (Saturday, April 19)"
   },
   {
     id: 2,
-    title: "Blockchain Fundamentals",
-    icon: <Database className="h-12 w-12" />,
+    title: "Design That Speaks: UI/UX Fundamentals",
+    icon: <Palette className="h-12 w-12" />,
     color: "cyber-green",
-    description: "Explore decentralized technology and learn how to implement basic blockchain solutions."
+    description: "Learn the art of intuitive design and how to use tools like Figma to craft user-friendly interfaces. Whether you're a design newbie or curious techie, this workshop turns your ideas into interactive experiences.",
+    session: "Session 1",
+    time: "09:30 → 12:00 (Saturday, April 19)"
   },
   {
     id: 3,
-    title: "IoT Innovation Lab",
-    icon: <HardDrive className="h-12 w-12" />,
+    title: "Smarter Systems: AI-Powered Industry Solutions",
+    icon: <Cpu className="h-12 w-12" />,
     color: "cyber-purple",
-    description: "Connect the physical world with digital solutions through Internet of Things technologies."
+    description: "Explore the power of Natural Language Processing (NLP) and predictive/generative AI. Build intelligent systems that understand, learn, and generate! The future of industry is AI—start building it today.",
+    session: "Session 1",
+    time: "09:30 → 12:00 (Saturday, April 19)"
   },
   {
     id: 4,
-    title: "Full-Stack Development",
-    icon: <Code2 className="h-12 w-12" />,
+    title: "Next-Gen Tech: Diving into the Hedera Ecosystem",
+    icon: <Globe className="h-12 w-12" />,
     color: "cyber-blue",
-    description: "Build complete web applications using modern frameworks and best practices."
+    description: "Take a deep dive into the Hedera Hashgraph world—a powerful alternative to traditional blockchain. Learn how to build efficient and eco-friendly dApps with real-world impact. Speed. Security. Innovation.",
+    session: "Session 2",
+    time: "13:30 → 15:30 (Saturday, April 19)"
   },
   {
     id: 5,
-    title: "Cybersecurity Defense",
-    icon: <Shield className="h-12 w-12" />,
+    title: "Deep Dive into Deep Learning",
+    icon: <Brain className="h-12 w-12" />,
     color: "cyber-green",
-    description: "Learn defensive security techniques and protect systems from cyber threats."
-  },
-  {
-    id: 6,
-    title: "Cloud Infrastructure",
-    icon: <Globe className="h-12 w-12" />,
-    color: "cyber-purple",
-    description: "Deploy and manage scalable applications using cloud technologies."
+    description: "From theory to practice, uncover the magic behind deep learning models. Train your own neural networks and understand how machines learn from data. No magic—just math, models, and mind-blowing results!",
+    session: "Session 2",
+    time: "13:30 → 15:30 (Saturday, April 19)"
   }
 ];
 
@@ -111,15 +116,24 @@ const WorkshopsPreview = () => {
     <section id="workshops" className="section-padding relative bg-dark-gray">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-3xl md:text-4xl font-orbitron font-bold text-center mb-6 text-cyber-blue glow-text-blue">
-          Workshops Preview
+          Workshop Preview
         </h2>
         
         <p className="text-center text-xl mb-12 max-w-3xl mx-auto">
-          Enhance your skills with our expert-led sessions. Full details coming soon!
+          Enhance your skills with our expert-led sessions across two main time slots!
         </p>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {workshops.map((workshop) => (
+        {/* Session headers */}
+        <div className="mb-10 space-y-6">
+          <div className="cyber-card p-4 max-w-md mx-auto text-center">
+            <h3 className="text-xl font-orbitron text-cyber-blue">🕘 Session 1: 09:30 → 12:00</h3>
+            <p className="text-gray-300">Saturday, April 19</p>
+          </div>
+        </div>
+        
+        {/* First session workshops */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+          {workshops.filter(w => w.session === "Session 1").map((workshop) => (
             <div 
               key={workshop.id}
               className={`cyber-card relative overflow-hidden ${workshop.color === 'cyber-blue' ? '' : workshop.color === 'cyber-green' ? 'cyber-card-green' : 'cyber-card-purple'}`}
@@ -135,15 +149,41 @@ const WorkshopsPreview = () => {
                   {workshop.title}
                 </h3>
                 
-                <div className="relative overflow-hidden h-24">
-                  <div className={`absolute inset-0 transition-transform duration-500 ease-in-out ${activeCard === workshop.id ? 'translate-y-full' : 'translate-y-0'}`}>
-                    <p className="text-center text-lg font-orbitron">To be revealed soon</p>
-                  </div>
-                  
-                  <div className={`absolute inset-0 transition-transform duration-500 ease-in-out ${activeCard === workshop.id ? 'translate-y-0' : '-translate-y-full'}`}>
-                    <p className="text-sm text-gray-300">{workshop.description}</p>
-                  </div>
+                <p className="text-sm text-gray-300 min-h-[100px]">{workshop.description}</p>
+              </div>
+              
+              <div className={`absolute bottom-0 left-0 w-full h-1 bg-${workshop.color}`}></div>
+            </div>
+          ))}
+        </div>
+        
+        {/* Session 2 header */}
+        <div className="mb-10 space-y-6">
+          <div className="cyber-card cyber-card-purple p-4 max-w-md mx-auto text-center">
+            <h3 className="text-xl font-orbitron text-cyber-purple">🕜 Session 2: 13:30 → 15:30</h3>
+            <p className="text-gray-300">Saturday, April 19</p>
+          </div>
+        </div>
+        
+        {/* Second session workshops */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          {workshops.filter(w => w.session === "Session 2").map((workshop) => (
+            <div 
+              key={workshop.id}
+              className={`cyber-card relative overflow-hidden ${workshop.color === 'cyber-blue' ? '' : workshop.color === 'cyber-green' ? 'cyber-card-green' : 'cyber-card-purple'}`}
+              onMouseEnter={() => handleCardHover(workshop.id)}
+              onMouseLeave={() => setActiveCard(null)}
+            >
+              <div className="p-8 glass-effect h-full">
+                <div className={`mb-6 text-${workshop.color}`}>
+                  {workshop.icon}
                 </div>
+                
+                <h3 className={`text-xl font-orbitron font-bold mb-4 text-${workshop.color}`}>
+                  {workshop.title}
+                </h3>
+                
+                <p className="text-sm text-gray-300 min-h-[100px]">{workshop.description}</p>
               </div>
               
               <div className={`absolute bottom-0 left-0 w-full h-1 bg-${workshop.color}`}></div>
@@ -152,7 +192,7 @@ const WorkshopsPreview = () => {
         </div>
         
         <div className="mt-16 text-center">
-          <p className="text-lg mb-4">Full Workshop Details & Challenges Will Be Revealed On:</p>
+          <p className="text-lg mb-4">Full Workshop Materials Will Be Available On:</p>
           <p className="text-cyber-purple mb-6">April 20, 2025 (Hackathon Day)</p>
           <div className="flex justify-center gap-4">
             <div className="cyber-card p-3 w-20">
