@@ -1,99 +1,112 @@
 
 import React from 'react';
-import { Calendar, Clock, Users } from 'lucide-react';
+import { Calendar, Clock, MapPin } from 'lucide-react';
+
+interface TimelineEvent {
+  time: string;
+  date: string;
+  activity: string;
+  place: string;
+}
+
+const timelineEvents: TimelineEvent[] = [
+  {
+    time: "09h00 - 09h30",
+    date: "Samedi 19 avril",
+    activity: "Mot d'ouverture",
+    place: "Amphi"
+  },
+  {
+    time: "09h30 - 12h00",
+    date: "Samedi 19 avril",
+    activity: "Workshops Session 1 (3 Parallel)",
+    place: "les salles"
+  },
+  {
+    time: "12h00 - 13h30",
+    date: "Samedi 19 avril",
+    activity: "Pause Café + Pause Musicale",
+    place: "Cour ISIMM"
+  },
+  {
+    time: "13h30 - 15h30",
+    date: "Samedi 19 avril",
+    activity: "Workshops Session 2 (3 Parallel)",
+    place: "les salles"
+  },
+  {
+    time: "17h00",
+    date: "Samedi 19 avril",
+    activity: "Start of Competition (Hackathon)",
+    place: "bibliothèque de l'ISIMM"
+  },
+  {
+    time: "08h00",
+    date: "Dimanche 20 avril",
+    activity: "End of Competition",
+    place: ""
+  }
+];
 
 const EventOverview = () => {
   return (
     <section id="about" className="section-padding relative">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-3xl md:text-4xl font-orbitron font-bold text-center mb-16 text-cyber-green glow-text-green">
-          Event Overview
+          Event Timeline
         </h2>
         
         <div className="relative">
           {/* Vertical timeline line */}
           <div className="absolute left-1/2 transform -translate-x-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-cyber-blue via-cyber-green to-cyber-purple"></div>
           
-          <div className="space-y-24">
+          <div className="space-y-16">
             {/* Intro Card */}
             <div className="relative z-10">
               <div className="flex justify-center mb-8">
                 <div className="cyber-card p-6 md:p-8 max-w-2xl glass-effect">
                   <p className="text-xl text-center">
-                    Get ready for IT Impact V1.0 – a two-day experience of pure innovation!
+                    IT Impact V1.0 – Your detailed schedule for an epic two-day tech experience!
                   </p>
                 </div>
               </div>
             </div>
             
-            {/* Day 1 Card */}
-            <div className="relative z-10">
-              <div className="w-6 h-6 absolute left-1/2 transform -translate-x-1/2 -translate-y-12 rounded-full bg-cyber-blue animate-pulse-glow"></div>
-              
-              <div className="flex flex-col md:flex-row items-center">
-                <div className="flex-1 md:text-right mb-6 md:mb-0 md:pr-10">
-                  <h3 className="text-2xl font-orbitron font-bold text-cyber-blue mb-3 glow-text-blue">Day 1 - April 19</h3>
-                  <div className="flex justify-end items-center text-gray-300 mb-2">
-                    <Clock className="h-4 w-4 mr-2" />
-                    <span>9:00 AM - 5:00 PM</span>
-                  </div>
-                  <div className="flex justify-end items-center text-gray-300">
-                    <Users className="h-4 w-4 mr-2" />
-                    <span>Limited to 150 participants</span>
-                  </div>
-                </div>
+            {/* Timeline Events */}
+            {timelineEvents.map((event, index) => (
+              <div key={index} className="relative z-10">
+                <div className={`w-6 h-6 absolute left-1/2 transform -translate-x-1/2 -translate-y-12 rounded-full ${
+                  index % 3 === 0 ? 'bg-cyber-blue' : index % 3 === 1 ? 'bg-cyber-green' : 'bg-cyber-purple'
+                } animate-pulse-glow`}></div>
                 
-                <div className="cyber-card flex-1 p-6 md:ml-10 glass-effect">
-                  <p className="text-lg">
-                    Dive into 6 expert-led workshops on emerging technologies. Learn, build, and connect with industry leaders.
-                  </p>
-                  <div className="mt-4 p-3 border border-cyber-blue-glow rounded-md bg-darker-gray bg-opacity-60">
-                    <p className="text-cyber-blue">
-                      🔹 AI & ML Workshop<br />
-                      🔹 Blockchain Fundamentals<br />
-                      🔹 IoT Innovation Lab<br />
-                      🔹 Full-Stack Development<br />
-                      🔹 Cybersecurity Defense<br />
-                      🔹 Cloud Infrastructure
+                <div className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} items-center`}>
+                  <div className={`flex-1 ${index % 2 === 0 ? 'md:text-right md:pr-10' : 'md:text-left md:pl-10'} mb-6 md:mb-0`}>
+                    <div className={`flex ${index % 2 === 0 ? 'justify-end' : 'justify-start'} items-center text-gray-100 mb-2`}>
+                      <Clock className="h-5 w-5 mr-2" />
+                      <span className="text-lg font-semibold">{event.time}</span>
+                    </div>
+                    <div className={`flex ${index % 2 === 0 ? 'justify-end' : 'justify-start'} items-center text-gray-300 mb-3`}>
+                      <Calendar className="h-4 w-4 mr-2" />
+                      <span>{event.date}</span>
+                    </div>
+                    {event.place && (
+                      <div className={`flex ${index % 2 === 0 ? 'justify-end' : 'justify-start'} items-center text-gray-400`}>
+                        <MapPin className="h-4 w-4 mr-2" />
+                        <span>{event.place}</span>
+                      </div>
+                    )}
+                  </div>
+                  
+                  <div className={`cyber-card ${
+                    index % 3 === 0 ? '' : index % 3 === 1 ? 'cyber-card-green' : 'cyber-card-purple'
+                  } flex-1 p-6 ${index % 2 === 0 ? 'md:ml-10' : 'md:mr-10'} glass-effect`}>
+                    <p className="text-lg font-semibold">
+                      {event.activity}
                     </p>
                   </div>
                 </div>
               </div>
-            </div>
-            
-            {/* Day 2 Card */}
-            <div className="relative z-10">
-              <div className="w-6 h-6 absolute left-1/2 transform -translate-x-1/2 -translate-y-12 rounded-full bg-cyber-green animate-pulse-glow"></div>
-              
-              <div className="flex flex-col md:flex-row-reverse items-center">
-                <div className="flex-1 md:text-left mb-6 md:mb-0 md:pl-10">
-                  <h3 className="text-2xl font-orbitron font-bold text-cyber-green mb-3 glow-text-green">Day 2 - April 20</h3>
-                  <div className="flex justify-start items-center text-gray-300 mb-2">
-                    <Clock className="h-4 w-4 mr-2" />
-                    <span>8:00 AM - 8:00 PM</span>
-                  </div>
-                  <div className="flex justify-start items-center text-gray-300">
-                    <Users className="h-4 w-4 mr-2" />
-                    <span>Teams of 2-4 people</span>
-                  </div>
-                </div>
-                
-                <div className="cyber-card cyber-card-green flex-1 p-6 md:mr-10 glass-effect">
-                  <p className="text-lg">
-                    Join the ultimate Hackathon challenge. Put your skills to the test, collaborate with fellow innovators, and build solutions that matter.
-                  </p>
-                  <div className="mt-4 p-3 border border-cyber-green-glow rounded-md bg-darker-gray bg-opacity-60">
-                    <p className="text-cyber-green">
-                      🔹 12-hour coding marathon<br />
-                      🔹 Industry-relevant challenges<br />
-                      🔹 Mentorship from experts<br />
-                      🔹 Valuable prizes<br />
-                      🔹 Networking opportunities
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
+            ))}
             
             {/* Conclusion Card */}
             <div className="relative z-10">

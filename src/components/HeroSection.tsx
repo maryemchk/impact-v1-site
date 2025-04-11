@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { Calendar, MapPin } from 'lucide-react';
@@ -19,14 +18,9 @@ const HeroSection = () => {
     }
   }, [index, titleText]);
 
-  const handleRegisterClick = () => {
-    toast({
-      title: "Registration Coming Soon",
-      description: "Registration will open soon! Stay tuned for updates.",
-      variant: "default",
-    });
-
-    // Play click sound
+  const handleJoinClick = () => {
+    window.open('https://discord.gg/your-discord-link', '_blank');
+    
     const audio = new Audio('/click-sound.mp3');
     audio.volume = 0.3;
     audio.play().catch(err => console.log('Audio playback prevented:', err));
@@ -61,10 +55,10 @@ const HeroSection = () => {
         </p>
         
         <button 
-          onClick={handleRegisterClick}
+          onClick={handleJoinClick}
           className="cyber-btn rounded-sm text-lg animate-pulse-glow"
         >
-          Register Now
+          Join Now
         </button>
       </div>
 
