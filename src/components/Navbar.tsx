@@ -1,5 +1,8 @@
+
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Volume2, VolumeX } from 'lucide-react';
+import { Menu, X, Volume2, VolumeX, ExternalLink } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+
 const navLinks = [{
   name: 'Home',
   href: '#hero'
@@ -19,10 +22,12 @@ const navLinks = [{
   name: 'Contact',
   href: '#contact'
 }];
+
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(false);
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
 
@@ -33,6 +38,7 @@ const Navbar = () => {
       audio.play().catch(err => console.log('Audio playback prevented:', err));
     }
   };
+
   const toggleSound = () => {
     setSoundEnabled(!soundEnabled);
 
@@ -41,6 +47,7 @@ const Navbar = () => {
     audio.volume = 0.3;
     audio.play().catch(err => console.log('Audio playback prevented:', err));
   };
+
   const handleLinkClick = () => {
     setIsMenuOpen(false);
 
@@ -51,6 +58,7 @@ const Navbar = () => {
       audio.play().catch(err => console.log('Audio playback prevented:', err));
     }
   };
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
@@ -62,6 +70,7 @@ const Navbar = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
   return <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'py-2 bg-darker-gray bg-opacity-80 backdrop-blur-lg' : 'py-4'}`}>
       <div className="max-w-6xl mx-auto px-6">
         <div className="flex justify-between items-center">
@@ -76,7 +85,18 @@ const Navbar = () => {
           </div>
           
           <div className="flex items-center gap-4">
-            
+            <a 
+              href="https://forms.gle/your-google-form-link" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="hidden md:flex"
+              onClick={handleLinkClick}
+            >
+              <Button className="cyber-btn flex items-center gap-2 bg-cyber-purple hover:bg-cyber-purple/80 border-cyber-purple text-white">
+                Register Now
+                <ExternalLink className="h-4 w-4" />
+              </Button>
+            </a>
             
             <button className="md:hidden p-2 text-gray-300 hover:text-cyber-blue transition-colors" onClick={toggleMenu} aria-label="Toggle menu">
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -91,8 +111,18 @@ const Navbar = () => {
           {navLinks.map((link, index) => <a key={index} href={link.href} className="block py-2 text-gray-300 hover:text-cyber-blue transition-colors" onClick={handleLinkClick}>
               {link.name}
             </a>)}
+          <a 
+            href="https://forms.gle/your-google-form-link" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="block py-2 text-cyber-purple hover:text-cyber-purple/80 font-bold"
+            onClick={handleLinkClick}
+          >
+            Register Now →
+          </a>
         </div>
       </div>
     </nav>;
 };
+
 export default Navbar;
