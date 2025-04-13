@@ -1,6 +1,15 @@
+
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Volume2, VolumeX, ExternalLink } from 'lucide-react';
+import { Menu, X, Volume2, VolumeX, ExternalLink, ChevronDown } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu"
 
 const navLinks = [{
   name: 'Home',
@@ -84,18 +93,51 @@ const Navbar = () => {
           </div>
           
           <div className="flex items-center gap-4">
-            <a 
-              href="https://docs.google.com/forms/d/1DTEN7H4ZPSKW0BXuoXgYEP0iBi4wXoftA733AW26nZs/viewform?edit_requested=true" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="hidden md:flex"
-              onClick={handleLinkClick}
-            >
-              <Button className="cyber-btn flex items-center gap-2 bg-cyber-purple hover:bg-cyber-purple/80 border-cyber-purple text-white">
-                Register Now
-                <ExternalLink className="h-4 w-4" />
-              </Button>
-            </a>
+            <div className="hidden md:block">
+              <NavigationMenu>
+                <NavigationMenuList>
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger className="cyber-btn bg-cyber-green hover:bg-cyber-green/80 border-cyber-green text-white font-bold">
+                      Register Now <ChevronDown className="h-4 w-4 ml-1" />
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <div className="grid w-[300px] p-4 gap-3">
+                        <a 
+                          href="https://docs.google.com/forms/d/1DTEN7H4ZPSKW0BXuoXgYEP0iBi4wXoftA733AW26nZs/viewform?edit_requested=true" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2 p-3 hover:bg-cyber-green/10 rounded-md group"
+                          onClick={handleLinkClick}
+                        >
+                          <div className="bg-cyber-green/20 p-2 rounded-md group-hover:bg-cyber-green/30">
+                            <PenTool className="h-5 w-5 text-cyber-green" />
+                          </div>
+                          <div>
+                            <div className="font-medium">Workshops</div>
+                            <div className="text-sm text-gray-400">Register for our expert-led workshops</div>
+                          </div>
+                        </a>
+                        <a 
+                          href="https://docs.google.com/forms/d/e/1FAIpQLSczL0WO_jTzx_tdVoN369pUrJoqKejYX5MK1QUPqVIWHFHLEA/viewform?usp=dialog" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2 p-3 hover:bg-cyber-purple/10 rounded-md group"
+                          onClick={handleLinkClick}
+                        >
+                          <div className="bg-cyber-purple/20 p-2 rounded-md group-hover:bg-cyber-purple/30">
+                            <Code className="h-5 w-5 text-cyber-purple" />
+                          </div>
+                          <div>
+                            <div className="font-medium">Hackathon</div>
+                            <div className="text-sm text-gray-400">Register for our hackathon competition</div>
+                          </div>
+                        </a>
+                      </div>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                </NavigationMenuList>
+              </NavigationMenu>
+            </div>
             
             <button className="md:hidden p-2 text-gray-300 hover:text-cyber-blue transition-colors" onClick={toggleMenu} aria-label="Toggle menu">
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -110,15 +152,27 @@ const Navbar = () => {
           {navLinks.map((link, index) => <a key={index} href={link.href} className="block py-2 text-gray-300 hover:text-cyber-blue transition-colors" onClick={handleLinkClick}>
               {link.name}
             </a>)}
-          <a 
-            href="https://docs.google.com/forms/d/1DTEN7H4ZPSKW0BXuoXgYEP0iBi4wXoftA733AW26nZs/viewform?edit_requested=true" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="block py-2 text-cyber-purple hover:text-cyber-purple/80 font-bold"
-            onClick={handleLinkClick}
-          >
-            Register Now →
-          </a>
+          <div className="pt-3 border-t border-gray-700">
+            <div className="font-medium text-cyber-green mb-2">Register Now:</div>
+            <a 
+              href="https://docs.google.com/forms/d/1DTEN7H4ZPSKW0BXuoXgYEP0iBi4wXoftA733AW26nZs/viewform?edit_requested=true" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="block py-2 text-white bg-cyber-green/20 px-4 rounded-md mb-2"
+              onClick={handleLinkClick}
+            >
+              <span className="font-bold">Workshops Registration</span>
+            </a>
+            <a 
+              href="https://docs.google.com/forms/d/e/1FAIpQLSczL0WO_jTzx_tdVoN369pUrJoqKejYX5MK1QUPqVIWHFHLEA/viewform?usp=dialog" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="block py-2 text-white bg-cyber-purple/20 px-4 rounded-md"
+              onClick={handleLinkClick}
+            >
+              <span className="font-bold">Hackathon Registration</span>
+            </a>
+          </div>
         </div>
       </div>
     </nav>;

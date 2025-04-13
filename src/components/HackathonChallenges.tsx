@@ -1,9 +1,10 @@
+
 import React, { useState, useEffect } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { 
   Lock, Unlock, Cpu, Cloud, HardDrive, 
   Globe, PieChart, ShieldAlert, Zap, Clock,
-  ExternalLink
+  ExternalLink, PenTool, Code
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 
@@ -322,15 +323,25 @@ const HackathonChallenges = () => {
       <div className="absolute -bottom-10 -right-10 w-40 h-40 rotate-45 border-8 border-cyber-blue/10 rounded-lg"></div>
       <div className="absolute -top-10 -left-10 w-40 h-40 -rotate-12 border-8 border-cyber-purple/10 rounded-lg"></div>
       
-      <div className="mt-10 text-center">
+      <div className="mt-16 text-center flex flex-col items-center">
+        <div className="relative">
+          <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 w-full">
+            <div className="w-32 h-1 bg-cyber-purple mx-auto"></div>
+          </div>
+          <div className="mb-6 text-2xl font-orbitron text-cyber-purple">Join the Competition</div>
+        </div>
         <a 
           href="https://docs.google.com/forms/d/e/1FAIpQLSczL0WO_jTzx_tdVoN369pUrJoqKejYX5MK1QUPqVIWHFHLEA/viewform?usp=dialog" 
           target="_blank" 
           rel="noopener noreferrer"
+          className="transform hover:scale-105 transition-all duration-300"
         >
-          <Button className="cyber-btn flex items-center gap-2 bg-cyber-purple hover:bg-cyber-purple/80 border-cyber-purple text-white text-lg px-8 py-6">
-            Register Now
-            <ExternalLink className="h-5 w-5" />
+          <Button className="cyber-btn flex items-center gap-2 bg-cyber-purple hover:bg-cyber-purple/80 border-cyber-purple text-white text-lg px-10 py-8 shadow-lg shadow-cyber-purple/20 relative overflow-hidden group">
+            <span className="relative z-10 flex items-center font-bold">
+              REGISTER FOR HACKATHON
+              <ExternalLink className="h-5 w-5 ml-2" />
+            </span>
+            <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300"></span>
           </Button>
         </a>
       </div>

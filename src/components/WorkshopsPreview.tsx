@@ -72,15 +72,25 @@ const WorkshopsPreview = () => {
           ))}
         </div>
 
-        <div className="mt-12 text-center">
+        <div className="mt-16 text-center flex flex-col items-center">
+          <div className="relative">
+            <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 w-full">
+              <div className="w-32 h-1 bg-cyber-green mx-auto"></div>
+            </div>
+            <div className="mb-6 text-2xl font-orbitron text-cyber-green">Ready to Join?</div>
+          </div>
           <a 
             href="https://docs.google.com/forms/d/1DTEN7H4ZPSKW0BXuoXgYEP0iBi4wXoftA733AW26nZs/viewform?edit_requested=true" 
             target="_blank" 
             rel="noopener noreferrer"
+            className="transform hover:scale-105 transition-all duration-300"
           >
-            <Button className="cyber-btn flex items-center gap-2 bg-cyber-green hover:bg-cyber-green/80 border-cyber-green text-white text-lg px-8 py-6">
-              Register Now
-              <ExternalLink className="h-5 w-5" />
+            <Button className="cyber-btn flex items-center gap-2 bg-cyber-green hover:bg-cyber-green/80 border-cyber-green text-white text-lg px-10 py-8 shadow-lg shadow-cyber-green/20 relative overflow-hidden group">
+              <span className="relative z-10 flex items-center font-bold">
+                REGISTER FOR WORKSHOPS
+                <ExternalLink className="h-5 w-5 ml-2" />
+              </span>
+              <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300"></span>
             </Button>
           </a>
         </div>
