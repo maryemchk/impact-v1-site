@@ -1,10 +1,11 @@
-
 import React, { useState, useEffect } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { 
   Lock, Unlock, Cpu, Cloud, HardDrive, 
-  Globe, PieChart, ShieldAlert, Zap, Clock
+  Globe, PieChart, ShieldAlert, Zap, Clock,
+  ExternalLink
 } from 'lucide-react';
+import { Button } from "@/components/ui/button";
 
 interface Challenge {
   id: number;
@@ -104,20 +105,17 @@ const HackathonChallenges = () => {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const { toast } = useToast();
 
-  // Check if the current date is April 20, 2025 (day of the hackathon)
   useEffect(() => {
     const checkDate = () => {
       const now = new Date();
       const hackathonDate = new Date(2025, 3, 20); // April 20, 2025 (month is 0-indexed)
       
-      // Set canReveal to true if it's the day of the hackathon
       const isHackathonDay = now.getFullYear() === hackathonDate.getFullYear() &&
                              now.getMonth() === hackathonDate.getMonth() &&
                              now.getDate() === hackathonDate.getDate();
       
       setCanReveal(isHackathonDay);
 
-      // Calculate and format countdown if it's not the hackathon day yet
       if (!isHackathonDay && hackathonDate > now) {
         const diffTime = hackathonDate.getTime() - now.getTime();
         const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
@@ -139,7 +137,6 @@ const HackathonChallenges = () => {
     };
 
     checkDate();
-    // Update the countdown every second for a more dynamic display
     const interval = setInterval(checkDate, 1000);
     
     return () => clearInterval(interval);
@@ -155,7 +152,6 @@ const HackathonChallenges = () => {
       return;
     }
 
-    // Play unlock sound
     const audio = new Audio('/unlock-sound.mp3');
     audio.volume = 0.3;
     audio.play().catch(err => console.log('Audio playback prevented:', err));
@@ -171,7 +167,6 @@ const HackathonChallenges = () => {
   const handleCardHover = (id: number | null) => {
     setHoveredCard(id);
     
-    // Play hover sound
     if (id !== null && revealed) {
       const audio = new Audio('/hover-sound.mp3');
       audio.volume = 0.1;
@@ -181,7 +176,6 @@ const HackathonChallenges = () => {
 
   return (
     <section id="hackathon" className="section-padding relative overflow-hidden">
-      {/* Animated background elements */}
       <div className="absolute inset-0 opacity-20 pointer-events-none">
         <div className="absolute top-0 left-0 w-full h-full circuit-background"></div>
         <div className="absolute top-10 left-10 w-16 h-16 bg-cyber-blue rounded-full blur-3xl animate-pulse"></div>
@@ -211,7 +205,6 @@ const HackathonChallenges = () => {
                     <span className="text-xl">{countdown}</span>
                   </div>
                   
-                  {/* Digital Countdown Display */}
                   <div className="flex justify-center gap-4 mt-6">
                     <div className="flex flex-col items-center">
                       <div className="text-4xl font-mono bg-darker-gray p-3 w-20 rounded-md border border-cyber-blue text-cyber-blue">
@@ -318,7 +311,7 @@ const HackathonChallenges = () => {
             </div>
             
             <div className="mt-10 text-center">
-              <p className="text-gray-400 text-sm backdrop-blur-sm bg-dark-gray/20 p-4 rounded-lg inline-block">
+              <p className="text-gray-400 text-sm backdrop-blur-sm bg-dark-gray/20 p-4 rounded-lg inline-block mb-8">
                 <span className="text-cyber-purple font-bold">Note:</span> Additional details, resources, and specific requirements for each challenge will be provided on the day of the hackathon.
               </p>
             </div>
@@ -326,9 +319,21 @@ const HackathonChallenges = () => {
         )}
       </div>
       
-      {/* Decorative elements */}
       <div className="absolute -bottom-10 -right-10 w-40 h-40 rotate-45 border-8 border-cyber-blue/10 rounded-lg"></div>
       <div className="absolute -top-10 -left-10 w-40 h-40 -rotate-12 border-8 border-cyber-purple/10 rounded-lg"></div>
+      
+      <div className="mt-10 text-center">
+        <a 
+          href="https://docs.google.com/forms/d/e/1FAIpQLSczL0WO_jTzx_tdVoN369pUrJoqKejYX5MK1QUPqVIWHFHLEA/viewform?usp=dialog" 
+          target="_blank" 
+          rel="noopener noreferrer"
+        >
+          <Button className="cyber-btn flex items-center gap-2 bg-cyber-purple hover:bg-cyber-purple/80 border-cyber-purple text-white text-lg px-8 py-6">
+            Register Now
+            <ExternalLink className="h-5 w-5" />
+          </Button>
+        </a>
+      </div>
     </section>
   );
 };

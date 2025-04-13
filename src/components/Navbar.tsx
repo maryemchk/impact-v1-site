@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Volume2, VolumeX, ExternalLink } from 'lucide-react';
 import { Button } from "@/components/ui/button";
@@ -86,7 +85,7 @@ const Navbar = () => {
           
           <div className="flex items-center gap-4">
             <a 
-              href="https://forms.gle/your-google-form-link" 
+              href="https://docs.google.com/forms/d/1DTEN7H4ZPSKW0BXuoXgYEP0iBi4wXoftA733AW26nZs/viewform?edit_requested=true" 
               target="_blank" 
               rel="noopener noreferrer" 
               className="hidden md:flex"
@@ -112,7 +111,7 @@ const Navbar = () => {
               {link.name}
             </a>)}
           <a 
-            href="https://forms.gle/your-google-form-link" 
+            href="https://docs.google.com/forms/d/1DTEN7H4ZPSKW0BXuoXgYEP0iBi4wXoftA733AW26nZs/viewform?edit_requested=true" 
             target="_blank" 
             rel="noopener noreferrer" 
             className="block py-2 text-cyber-purple hover:text-cyber-purple/80 font-bold"

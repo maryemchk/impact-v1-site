@@ -1,6 +1,7 @@
 
 import React from 'react';
-import { Code, PenTool, Brain, Globe, Server } from 'lucide-react';
+import { Code, PenTool, Brain, Globe, Server, ExternalLink } from 'lucide-react';
+import { Button } from "@/components/ui/button";
 
 const workshops = [
   {
@@ -69,6 +70,19 @@ const WorkshopsPreview = () => {
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="mt-12 text-center">
+          <a 
+            href="https://docs.google.com/forms/d/1DTEN7H4ZPSKW0BXuoXgYEP0iBi4wXoftA733AW26nZs/viewform?edit_requested=true" 
+            target="_blank" 
+            rel="noopener noreferrer"
+          >
+            <Button className="cyber-btn flex items-center gap-2 bg-cyber-green hover:bg-cyber-green/80 border-cyber-green text-white text-lg px-8 py-6">
+              Register Now
+              <ExternalLink className="h-5 w-5" />
+            </Button>
+          </a>
         </div>
       </div>
     </section>
