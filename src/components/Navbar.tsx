@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Volume2, VolumeX, ExternalLink, ChevronDown } from 'lucide-react';
+import { Menu, X, Volume2, VolumeX, ExternalLink, ChevronDown, PenTool, Code } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
