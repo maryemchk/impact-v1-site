@@ -70,6 +70,7 @@ export default {
 				"cyber-green-glow": "rgba(0, 255, 102, 0.7)",
 				"cyber-purple": "#be0fff",
 				"cyber-purple-glow": "rgba(190, 15, 255, 0.7)",
+				"cyber-gold": "#FFD700",
 				"dark-gray": "#121212",
 				"darker-gray": "#080808"
 			},
