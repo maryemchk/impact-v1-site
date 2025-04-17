@@ -8,11 +8,16 @@ interface Particle {
   speedX: number;
   speedY: number;
   color: string;
+  alpha: number;
+  pulsing: boolean;
+  pulseDirection: number;
+  pulseSpeed: number;
 }
 
 const ParticleBackground = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particles = useRef<Particle[]>([]);
+  const mousePosition = useRef<{ x: number; y: number } | null>(null);
   const animationFrameId = useRef<number | null>(null);
 
   useEffect(() => {
@@ -28,7 +33,17 @@ const ParticleBackground = () => {
       initParticles();
     };
 
+    const handleMouseMove = (event: MouseEvent) => {
+      mousePosition.current = { x: event.clientX, y: event.clientY };
+    };
+
+    const handleMouseLeave = () => {
+      mousePosition.current = null;
+    };
+
     window.addEventListener('resize', handleResize);
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseleave', handleMouseLeave);
     handleResize();
 
     function initParticles() {
@@ -38,7 +53,7 @@ const ParticleBackground = () => {
       for (let i = 0; i < particleCount; i++) {
         const colors = ['rgba(0, 255, 255, ', 'rgba(0, 255, 102, ', 'rgba(190, 15, 255, '];
         const color = colors[Math.floor(Math.random() * colors.length)];
-        const opacity = (Math.random() * 0.5 + 0.2).toFixed(2);
+        const alpha = Math.random() * 0.5 + 0.2;
         
         particles.current.push({
           x: Math.random() * canvas.width,
@@ -46,7 +61,11 @@ const ParticleBackground = () => {
           size: Math.random() * 2 + 0.5,
           speedX: (Math.random() - 0.5) * 0.5,
           speedY: (Math.random() - 0.5) * 0.5,
-          color: `${color}${opacity})`
+          color: color,
+          alpha: alpha,
+          pulsing: Math.random() > 0.7, // 30% of particles will pulse
+          pulseDirection: Math.random() > 0.5 ? 1 : -1,
+          pulseSpeed: Math.random() * 0.02 + 0.01
         });
       }
     }
@@ -55,8 +74,21 @@ const ParticleBackground = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
       particles.current.forEach((particle, i) => {
+        // Update alpha if particle is pulsing
+        if (particle.pulsing) {
+          particle.alpha += particle.pulseSpeed * particle.pulseDirection;
+          
+          if (particle.alpha >= 0.7) {
+            particle.alpha = 0.7;
+            particle.pulseDirection = -1;
+          } else if (particle.alpha <= 0.2) {
+            particle.alpha = 0.2;
+            particle.pulseDirection = 1;
+          }
+        }
+        
         // Draw particle
-        ctx.fillStyle = particle.color;
+        ctx.fillStyle = `${particle.color}${particle.alpha})`;
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
         ctx.fill();
@@ -72,6 +104,27 @@ const ParticleBackground = () => {
         
         if (particle.y < 0 || particle.y > canvas.height) {
           particle.speedY *= -1;
+        }
+        
+        // React to mouse proximity if mouse is on canvas
+        if (mousePosition.current) {
+          const dx = particle.x - mousePosition.current.x;
+          const dy = particle.y - mousePosition.current.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          
+          if (distance < 120) {
+            const force = 0.3 * (120 - distance) / 120;
+            const angle = Math.atan2(dy, dx);
+            particle.speedX += Math.cos(angle) * force;
+            particle.speedY += Math.sin(angle) * force;
+            
+            // Cap max speed
+            const speed = Math.sqrt(particle.speedX * particle.speedX + particle.speedY * particle.speedY);
+            if (speed > 2) {
+              particle.speedX = (particle.speedX / speed) * 2;
+              particle.speedY = (particle.speedY / speed) * 2;
+            }
+          }
         }
         
         // Connect particles that are close to each other
@@ -96,6 +149,11 @@ const ParticleBackground = () => {
 
     function animate() {
       drawParticles();
+      // Apply a very small amount of damping to gradually slow particles
+      particles.current.forEach(particle => {
+        particle.speedX *= 0.99;
+        particle.speedY *= 0.99;
+      });
       animationFrameId.current = requestAnimationFrame(animate);
     }
 
@@ -106,6 +164,8 @@ const ParticleBackground = () => {
         cancelAnimationFrame(animationFrameId.current);
       }
       window.removeEventListener('resize', handleResize);
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseleave', handleMouseLeave);
     };
   }, []);
 
