@@ -1,9 +1,10 @@
+
 import React, { useState, useEffect } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { 
-  Lock, Unlock, Cpu, Cloud,
-  Globe, ShieldAlert, Zap, Clock,
-  ExternalLink, Award, Trophy
+  Lock, Unlock, Cpu, Cloud, HardDrive, 
+  Globe, PieChart, ShieldAlert, Zap, Clock,
+  ExternalLink, PenTool, Code
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 
@@ -15,39 +16,80 @@ interface Challenge {
   category: string;
   difficulty: 'Easy' | 'Medium' | 'Hard';
   color: string;
-  details: string[];
 }
 
 const challenges: Challenge[] = [
   {
     id: 1,
-    title: "AI for Social Good",
-    description: "Design and implement an AI solution that addresses a significant social challenge in education, healthcare, or sustainability.",
-    icon: <Cpu className="h-8 w-8" />,
-    category: "AI/ML",
-    difficulty: "Hard",
-    color: "cyber-blue",
-    details: [
-      "Create a machine learning model that can be used to solve a real-world problem",
-      "Implement a user-friendly interface for non-technical users",
-      "Include data visualization to explain your AI's decision-making process",
-      "Demonstrate how your solution scales to real-world applications"
-    ]
+    title: "Smart City Solutions",
+    description: "Build IoT solutions for urban challenges like traffic, waste management, or public safety.",
+    icon: <HardDrive className="h-8 w-8" />,
+    category: "IoT",
+    difficulty: "Medium",
+    color: "cyber-blue"
   },
   {
     id: 2,
-    title: "Cybersecurity Innovation",
-    description: "Develop a cybersecurity tool that helps identify vulnerabilities, educate users about security best practices, or protect sensitive data.",
+    title: "HealthTech Innovation",
+    description: "Create digital health applications that improve patient care or medical processes.",
+    icon: <PieChart className="h-8 w-8" />,
+    category: "AI/ML",
+    difficulty: "Hard",
+    color: "cyber-green"
+  },
+  {
+    id: 3,
+    title: "FinTech Platform",
+    description: "Develop secure financial technology solutions for transactions, savings, or investments.",
+    icon: <ShieldAlert className="h-8 w-8" />,
+    category: "Blockchain",
+    difficulty: "Hard",
+    color: "cyber-purple"
+  },
+  {
+    id: 4,
+    title: "Climate Tech",
+    description: "Build solutions that address climate change, sustainability, or environmental monitoring.",
+    icon: <Globe className="h-8 w-8" />,
+    category: "Full-Stack",
+    difficulty: "Medium",
+    color: "cyber-blue"
+  },
+  {
+    id: 5,
+    title: "EdTech Platform",
+    description: "Create innovative educational technology to enhance learning experiences.",
+    icon: <Cloud className="h-8 w-8" />,
+    category: "Cloud",
+    difficulty: "Medium",
+    color: "cyber-green"
+  },
+  {
+    id: 6,
+    title: "Cybersecurity Tool",
+    description: "Develop tools for threat detection, vulnerability assessment, or security education.",
     icon: <ShieldAlert className="h-8 w-8" />,
     category: "Cybersecurity",
-    difficulty: "Medium",
-    color: "cyber-purple",
-    details: [
-      "Create an innovative approach to a common security challenge",
-      "Implement at least one core security feature (encryption, authentication, etc.)",
-      "Design with user experience in mind - security should be accessible",
-      "Include educational elements that teach users about cybersecurity"
-    ]
+    difficulty: "Hard",
+    color: "cyber-purple"
+  },
+  {
+    id: 7,
+    title: "AI Assistant",
+    description: "Build an AI-powered assistant for specific industry or accessibility needs.",
+    icon: <Cpu className="h-8 w-8" />,
+    category: "AI/ML",
+    difficulty: "Hard",
+    color: "cyber-blue"
+  },
+  {
+    id: 8,
+    title: "Open Innovation",
+    description: "Bring your own idea to solve a real-world problem using any technology stack.",
+    icon: <Zap className="h-8 w-8" />,
+    category: "Any",
+    difficulty: "Easy",
+    color: "cyber-green"
   }
 ];
 
@@ -62,7 +104,6 @@ const HackathonChallenges = () => {
     seconds: 0
   });
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
-  const [expandedDetails, setExpandedDetails] = useState<number | null>(null);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -134,16 +175,6 @@ const HackathonChallenges = () => {
     }
   };
 
-  const toggleDetails = (id: number) => {
-    setExpandedDetails(expandedDetails === id ? null : id);
-    
-    if (revealed) {
-      const audio = new Audio('/click-sound.mp3');
-      audio.volume = 0.1;
-      audio.play().catch(err => console.log('Audio playback prevented:', err));
-    }
-  };
-
   return (
     <section id="hackathon" className="section-padding relative overflow-hidden">
       <div className="absolute inset-0 opacity-20 pointer-events-none">
@@ -154,21 +185,12 @@ const HackathonChallenges = () => {
       </div>
       
       <div className="max-w-6xl mx-auto relative z-10">
-        <div className="relative mb-6">
-          <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 w-full">
-            <div className="w-32 h-1 bg-cyber-blue mx-auto"></div>
-          </div>
-          <h2 className="text-3xl md:text-5xl font-orbitron font-bold text-center mb-2 text-cyber-purple glow-text-purple flex items-center justify-center gap-3">
-            <Trophy className="h-8 w-8 text-cyber-purple animate-pulse" />
-            <span className="before:content-['<'] after:content-['>'] before:opacity-40 after:opacity-40 before:mr-2 after:ml-2">
-              2025 Hackathon Challenges
-            </span>
-            <Trophy className="h-8 w-8 text-cyber-purple animate-pulse" />
-          </h2>
-        </div>
+        <h2 className="text-3xl md:text-5xl font-orbitron font-bold text-center mb-6 text-cyber-purple glow-text-purple before:content-['<'] after:content-['>'] before:opacity-40 after:opacity-40 before:mr-2 after:ml-2">
+          Hackathon Challenges
+        </h2>
         
-        <p className="text-center text-xl mb-12 max-w-3xl mx-auto leading-relaxed backdrop-blur-sm bg-dark-gray/20 p-4 rounded-lg border border-cyber-purple/20">
-          Choose between two exciting challenges for this year's hackathon. Form teams of 2-4 people and build innovative solutions to compete for amazing prizes!
+        <p className="text-center text-xl mb-12 max-w-3xl mx-auto leading-relaxed backdrop-blur-sm bg-dark-gray/20 p-4 rounded-lg">
+          Put your skills to the test with our industry-inspired challenges. Form teams of 2-4 people and build innovative solutions that could shape the future.
         </p>
         
         {!revealed ? (
@@ -241,14 +263,14 @@ const HackathonChallenges = () => {
               <Unlock className="h-8 w-8 text-cyber-purple animate-pulse" />
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 transition-all duration-1000 ease-in-out">
               {challenges.map((challenge) => (
                 <div 
                   key={challenge.id}
                   className={`cyber-card transform transition-all duration-500 ${
                     hoveredCard === challenge.id ? 'scale-105 -translate-y-2' : ''
-                  } ${challenge.color === 'cyber-blue' ? '' : 'cyber-card-purple'} transition-all duration-500 ease-in-out opacity-0 animate-[fadeIn_0.5s_forwards]`}
-                  style={{ animationDelay: `${challenge.id * 0.2}s` }}
+                  } ${challenge.color === 'cyber-blue' ? '' : challenge.color === 'cyber-green' ? 'cyber-card-green' : 'cyber-card-purple'} transition-all duration-500 ease-in-out opacity-0 animate-[fadeIn_0.5s_forwards]`}
+                  style={{ animationDelay: `${challenge.id * 0.1}s` }}
                   onMouseEnter={() => handleCardHover(challenge.id)}
                   onMouseLeave={() => handleCardHover(null)}
                 >
@@ -256,7 +278,7 @@ const HackathonChallenges = () => {
                     <div className={`flex items-center mb-4 text-${challenge.color}`}>
                       {challenge.icon}
                       <div className="ml-3 text-sm font-semibold">{challenge.category}</div>
-                      <div className={`ml-auto px-3 py-1 text-xs rounded-full ${
+                      <div className={`ml-auto px-2 py-1 text-xs rounded-full ${
                         challenge.difficulty === 'Easy' 
                           ? 'bg-cyber-green bg-opacity-20 text-cyber-green' 
                           : challenge.difficulty === 'Medium'
@@ -267,46 +289,20 @@ const HackathonChallenges = () => {
                       </div>
                     </div>
                     
-                    <h3 className={`text-2xl font-orbitron font-bold mb-4 text-${challenge.color}`}>
+                    <h3 className={`text-xl font-orbitron font-bold mb-3 text-${challenge.color}`}>
                       {challenge.title}
                     </h3>
                     
-                    <p className="text-gray-300 mb-6 text-base">
+                    <p className="text-sm text-gray-300">
                       {challenge.description}
                     </p>
                     
-                    <div 
-                      className="cursor-pointer flex items-center justify-between border-t border-gray-700 pt-4 mt-4"
-                      onClick={() => toggleDetails(challenge.id)}
-                    >
-                      <span className={`text-${challenge.color} font-semibold`}>
-                        {expandedDetails === challenge.id ? "Hide Details" : "View Requirements"}
-                      </span>
-                      <span className={`transition-transform duration-300 ${expandedDetails === challenge.id ? 'rotate-180' : ''}`}>
-                        ▼
-                      </span>
-                    </div>
-                    
-                    {expandedDetails === challenge.id && (
-                      <div className="mt-4 pt-4 border-t border-gray-700 animate-fade-in">
-                        <h4 className="text-lg font-semibold mb-3">Requirements:</h4>
-                        <ul className="space-y-2">
-                          {challenge.details.map((detail, idx) => (
-                            <li key={idx} className="flex items-start">
-                              <span className={`text-${challenge.color} mr-2`}>•</span>
-                              <span>{detail}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                    
-                    <div className={`w-full h-1 mt-6 bg-${challenge.color} bg-opacity-20 rounded-full overflow-hidden`}>
+                    <div className={`w-full h-1 mt-4 bg-${challenge.color} bg-opacity-20 rounded-full overflow-hidden`}>
                       <div 
                         className={`h-full bg-${challenge.color} transition-all duration-1000 rounded-full`}
                         style={{ 
                           width: hoveredCard === challenge.id ? '100%' : '30%',
-                          boxShadow: `0 0 10px ${challenge.color === 'cyber-blue' ? 'rgba(0, 255, 255, 0.7)' : 'rgba(190, 15, 255, 0.7)'}` 
+                          boxShadow: `0 0 10px ${challenge.color === 'cyber-blue' ? 'rgba(0, 255, 255, 0.7)' : challenge.color === 'cyber-green' ? 'rgba(0, 255, 102, 0.7)' : 'rgba(190, 15, 255, 0.7)'}` 
                         }}
                       ></div>
                     </div>
@@ -316,15 +312,8 @@ const HackathonChallenges = () => {
             </div>
             
             <div className="mt-10 text-center">
-              <div className="flex items-center justify-center mb-8 gap-3">
-                <Award className="h-6 w-6 text-cyber-green" />
-                <p className="text-cyber-green text-lg font-semibold">
-                  Both challenges compete for the same prize pool!
-                </p>
-                <Award className="h-6 w-6 text-cyber-green" />
-              </div>
-              <p className="text-gray-400 text-sm backdrop-blur-sm bg-dark-gray/20 p-4 rounded-lg inline-block">
-                <span className="text-cyber-purple font-bold">Note:</span> Additional resources and mentorship will be provided on the day of the hackathon.
+              <p className="text-gray-400 text-sm backdrop-blur-sm bg-dark-gray/20 p-4 rounded-lg inline-block mb-8">
+                <span className="text-cyber-purple font-bold">Note:</span> Additional details, resources, and specific requirements for each challenge will be provided on the day of the hackathon.
               </p>
             </div>
           </div>
