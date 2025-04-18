@@ -1,12 +1,7 @@
-
 import React from 'react';
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Brain, ShieldCheck, Users, Clock, Medal, Cpu, Code, CheckCircle2, ExternalLink } from 'lucide-react';
-
 interface Challenge {
   id: number;
   title: string;
@@ -17,67 +12,36 @@ interface Challenge {
   rewards: string[];
   tools: string[];
 }
-
-const challenges: Challenge[] = [
-  {
-    id: 1,
-    title: "AI Innovation Challenge",
-    icon: <Brain className="h-8 w-8 text-primary" />,
-    difficulty: "Advanced",
-    description: "Build an innovative AI solution that addresses real-world challenges in healthcare, education, or environmental sustainability.",
-    requirements: [
-      "Implement machine learning or deep learning models",
-      "Create a user-friendly interface",
-      "Include data visualization components",
-      "Provide clear documentation",
-    ],
-    rewards: [
-      "First Prize: $5,000",
-      "AI Development Kit",
-      "Cloud Credits worth $2,000",
-      "1:1 Mentorship with Industry Experts"
-    ],
-    tools: [
-      "TensorFlow/PyTorch",
-      "Cloud Computing Platform",
-      "Modern Web Framework",
-    ]
-  },
-  {
-    id: 2,
-    title: "Cybersecurity Challenge",
-    icon: <ShieldCheck className="h-8 w-8 text-primary" />,
-    difficulty: "Intermediate",
-    description: "Create an innovative security solution for threat detection, secure authentication, or cybersecurity education.",
-    requirements: [
-      "Implement secure coding practices",
-      "Create real-time monitoring features",
-      "Include comprehensive security reporting",
-      "Focus on user privacy and data protection"
-    ],
-    rewards: [
-      "First Prize: $4,000",
-      "Security Tools License",
-      "Cloud Credits worth $1,500",
-      "Security Certification Voucher"
-    ],
-    tools: [
-      "Security Testing Tools",
-      "Cloud Security Services",
-      "Authentication Framework"
-    ]
-  }
-];
-
-const ChallengeCard = ({ challenge }: { challenge: Challenge }) => {
+const challenges: Challenge[] = [{
+  id: 1,
+  title: "AI Innovation Challenge",
+  icon: <Brain className="h-8 w-8 text-primary" />,
+  difficulty: "Advanced",
+  description: "Build an innovative AI solution that addresses real-world challenges in healthcare, education, or environmental sustainability.",
+  requirements: ["Implement machine learning or deep learning models", "Create a user-friendly interface", "Include data visualization components", "Provide clear documentation"],
+  rewards: ["First Prize: $5,000", "AI Development Kit", "Cloud Credits worth $2,000", "1:1 Mentorship with Industry Experts"],
+  tools: ["TensorFlow/PyTorch", "Cloud Computing Platform", "Modern Web Framework"]
+}, {
+  id: 2,
+  title: "Cybersecurity Challenge",
+  icon: <ShieldCheck className="h-8 w-8 text-primary" />,
+  difficulty: "Intermediate",
+  description: "Create an innovative security solution for threat detection, secure authentication, or cybersecurity education.",
+  requirements: ["Implement secure coding practices", "Create real-time monitoring features", "Include comprehensive security reporting", "Focus on user privacy and data protection"],
+  rewards: ["First Prize: $4,000", "Security Tools License", "Cloud Credits worth $1,500", "Security Certification Voucher"],
+  tools: ["Security Testing Tools", "Cloud Security Services", "Authentication Framework"]
+}];
+const ChallengeCard = ({
+  challenge
+}: {
+  challenge: Challenge;
+}) => {
   const difficultyColor = {
     Beginner: 'text-emerald-400',
     Intermediate: 'text-blue-400',
     Advanced: 'text-purple-400'
   }[challenge.difficulty];
-
-  return (
-    <Card className="group relative overflow-hidden border-2 border-muted backdrop-blur-sm transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5">
+  return <Card className="group relative overflow-hidden border-2 border-muted backdrop-blur-sm transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5">
       <CardContent className="space-y-6 p-6">
         <div className="flex items-start justify-between gap-4">
           <div className="flex items-center gap-3">
@@ -109,12 +73,10 @@ const ChallengeCard = ({ challenge }: { challenge: Challenge }) => {
               Requirements
             </div>
             <ul className="grid gap-2 text-sm text-muted-foreground">
-              {challenge.requirements.map((req, index) => (
-                <li key={index} className="flex items-center gap-2">
+              {challenge.requirements.map((req, index) => <li key={index} className="flex items-center gap-2">
                   <div className="h-1 w-1 rounded-full bg-muted-foreground/50" />
                   {req}
-                </li>
-              ))}
+                </li>)}
             </ul>
           </div>
 
@@ -124,12 +86,10 @@ const ChallengeCard = ({ challenge }: { challenge: Challenge }) => {
               Rewards
             </div>
             <ul className="grid gap-2 text-sm text-muted-foreground">
-              {challenge.rewards.map((reward, index) => (
-                <li key={index} className="flex items-center gap-2">
+              {challenge.rewards.map((reward, index) => <li key={index} className="flex items-center gap-2">
                   <div className="h-1 w-1 rounded-full bg-muted-foreground/50" />
                   {reward}
-                </li>
-              ))}
+                </li>)}
             </ul>
           </div>
 
@@ -139,26 +99,18 @@ const ChallengeCard = ({ challenge }: { challenge: Challenge }) => {
               Recommended Tools
             </div>
             <ul className="flex flex-wrap gap-2">
-              {challenge.tools.map((tool, index) => (
-                <li
-                  key={index}
-                  className="rounded-full border border-border bg-muted/50 px-3 py-1 text-xs text
--muted-foreground"
-                >
+              {challenge.tools.map((tool, index) => <li key={index} className="rounded-full border border-border bg-muted/50 px-3 py-1 text-xs text
+-muted-foreground">
                   {tool}
-                </li>
-              ))}
+                </li>)}
             </ul>
           </div>
         </div>
       </CardContent>
-    </Card>
-  );
+    </Card>;
 };
-
 const HackathonChallenges = () => {
-  return (
-    <section className="relative overflow-hidden py-20">
+  return <section className="relative overflow-hidden py-20">
       <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_110%)]" />
       <div className="container relative space-y-12">
         <div className="mx-auto max-w-3xl space-y-6 text-center">
@@ -180,21 +132,14 @@ const HackathonChallenges = () => {
                 2 Challenges
               </div>
             </div>
-            <p className="text-muted-foreground">
-              Choose your challenge and showcase your innovation. Work in teams of 2-4 to build solutions
-              that can make a real impact. Join us in pushing the boundaries of technology.
-            </p>
+            <p className="text-muted-foreground">Choose your challenge and showcase your innovation. Work in teams of 1-5 to build solutions that can make a real impact. Join us in pushing the boundaries of technology.</p>
           </div>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2">
-          {challenges.map((challenge) => (
-            <ChallengeCard key={challenge.id} challenge={challenge} />
-          ))}
+          {challenges.map(challenge => <ChallengeCard key={challenge.id} challenge={challenge} />)}
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default HackathonChallenges;
