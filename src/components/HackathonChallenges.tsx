@@ -1,8 +1,9 @@
 
 import React, { useState } from 'react';
-import { Brain, ShieldAlert, Award, Code, BadgeCheck, Trophy } from 'lucide-react';
+import { Brain, ShieldAlert, Award, Code, BadgeCheck, Trophy, Clock, Users, Target } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Card, CardContent } from "@/components/ui/card";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface Challenge {
   id: number;
@@ -79,13 +80,27 @@ const HackathonChallenges = () => {
       </div>
       
       <div className="max-w-6xl mx-auto relative z-10">
-        <h2 className="text-4xl md:text-5xl font-orbitron font-bold text-center mb-8 text-cyber-purple glow-text-purple">
+        <h2 className="text-4xl md:text-5xl font-orbitron font-bold text-center mb-4 text-cyber-purple glow-text-purple">
           Hackathon Challenges
         </h2>
         
+        <div className="flex items-center justify-center gap-4 mb-8">
+          <div className="flex items-center">
+            <Clock className="h-5 w-5 text-cyber-blue mr-2" />
+            <span className="text-gray-300">48 Hours</span>
+          </div>
+          <div className="flex items-center">
+            <Users className="h-5 w-5 text-cyber-purple mr-2" />
+            <span className="text-gray-300">2-4 Team Members</span>
+          </div>
+          <div className="flex items-center">
+            <Target className="h-5 w-5 text-cyber-green mr-2" />
+            <span className="text-gray-300">Win Amazing Prizes</span>
+          </div>
+        </div>
+        
         <p className="text-center text-xl mb-12 max-w-3xl mx-auto leading-relaxed text-gray-300">
-          Choose from our innovative challenges and build solutions that could shape the future. 
-          Form teams of 2-4 people and showcase your technical expertise.
+          Choose your challenge and showcase your innovation. Each challenge offers unique opportunities to demonstrate your technical expertise and creativity.
         </p>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -104,15 +119,22 @@ const HackathonChallenges = () => {
                 <div className={`flex items-center mb-4 text-${challenge.color}`}>
                   {challenge.icon}
                   <div className="ml-3 text-sm font-semibold">{challenge.category}</div>
-                  <div className={`ml-auto px-3 py-1 text-xs rounded-full ${
-                    challenge.difficulty === 'Easy' 
-                      ? 'bg-cyber-green/20 text-cyber-green' 
-                      : challenge.difficulty === 'Medium' 
-                      ? 'bg-cyber-blue/20 text-cyber-blue' 
-                      : 'bg-cyber-purple/20 text-cyber-purple'
-                  }`}>
-                    {challenge.difficulty}
-                  </div>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <div className={`ml-auto px-3 py-1 text-xs rounded-full ${
+                        challenge.difficulty === 'Easy' 
+                          ? 'bg-cyber-green/20 text-cyber-green' 
+                          : challenge.difficulty === 'Medium' 
+                          ? 'bg-cyber-blue/20 text-cyber-blue' 
+                          : 'bg-cyber-purple/20 text-cyber-purple'
+                      }`}>
+                        {challenge.difficulty}
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Challenge Difficulty Level</p>
+                    </TooltipContent>
+                  </Tooltip>
                 </div>
                 
                 <CollapsibleTrigger className="w-full text-left">
@@ -122,34 +144,34 @@ const HackathonChallenges = () => {
                   </h3>
                 </CollapsibleTrigger>
                 
-                <p className="text-gray-300 mb-4">
+                <p className="text-gray-300 mb-4 text-lg">
                   {challenge.description}
                 </p>
                 
                 <CollapsibleContent>
-                  <div className="mt-6 pt-4 border-t border-gray-700/50">
-                    <div className="mb-6">
-                      <h4 className={`font-orbitron text-${challenge.color} text-lg mb-3 flex items-center`}>
+                  <div className="mt-6 space-y-6 border-t border-gray-700/50 pt-6">
+                    <div className="bg-darker-gray/50 p-4 rounded-lg backdrop-blur-sm">
+                      <h4 className={`font-orbitron text-${challenge.color} text-lg mb-4 flex items-center`}>
                         <Code className="h-5 w-5 mr-2" /> Challenge Details
                       </h4>
-                      <ul className="space-y-2 text-gray-300">
+                      <ul className="space-y-3 text-gray-300">
                         {challenge.details?.map((detail, index) => (
-                          <li key={index} className="flex items-start">
-                            <span className={`text-${challenge.color} mr-2`}>•</span>
+                          <li key={index} className="flex items-start bg-dark-gray/30 p-3 rounded">
+                            <span className={`text-${challenge.color} mr-2 shrink-0`}>•</span>
                             <span>{detail}</span>
                           </li>
                         ))}
                       </ul>
                     </div>
                     
-                    <div>
-                      <h4 className={`font-orbitron text-${challenge.color} text-lg mb-3 flex items-center`}>
-                        <BadgeCheck className="h-5 w-5 mr-2" /> Requirements
+                    <div className="bg-darker-gray/50 p-4 rounded-lg backdrop-blur-sm">
+                      <h4 className={`font-orbitron text-${challenge.color} text-lg mb-4 flex items-center`}>
+                        <BadgeCheck className="h-5 w-5 mr-2" /> Technical Requirements
                       </h4>
-                      <ul className="space-y-2 text-gray-300">
+                      <ul className="space-y-3 text-gray-300">
                         {challenge.requirements?.map((req, index) => (
-                          <li key={index} className="flex items-start">
-                            <span className={`text-${challenge.color} mr-2`}>✓</span>
+                          <li key={index} className="flex items-start bg-dark-gray/30 p-3 rounded">
+                            <span className={`text-${challenge.color} mr-2 shrink-0`}>✓</span>
                             <span>{req}</span>
                           </li>
                         ))}
@@ -179,3 +201,4 @@ const HackathonChallenges = () => {
 };
 
 export default HackathonChallenges;
+
