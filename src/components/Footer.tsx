@@ -1,13 +1,9 @@
-
 import React from 'react';
 import { HeartPulse } from 'lucide-react';
-
 const Footer = () => {
   // Current year
   const year = new Date().getFullYear();
-
-  return (
-    <footer className="relative py-10 bg-dark-gray border-t border-cyber-blue-glow">
+  return <footer className="relative py-10 bg-dark-gray border-t border-cyber-blue-glow">
       <div className="absolute inset-0 z-0 circuit-background animate-circuit-flow opacity-30"></div>
       
       <div className="relative z-10 max-w-6xl mx-auto px-6">
@@ -33,7 +29,7 @@ const Footer = () => {
           <div className="text-center mb-8">
             <p className="text-sm text-gray-400 mb-2">Powered by</p>
             <div className="font-orbitron font-bold text-xl text-cyber-purple glow-text-purple">ARSII ISIMM</div>
-            <p className="text-xs text-gray-500 mt-1">Association of Network and Information Systems Engineers</p>
+            <p className="text-xs text-gray-500 mt-1">Association of Scientific Research and Innovation in Computer Science</p>
           </div>
           
           <div className="flex flex-col md:flex-row items-center justify-between w-full text-sm text-gray-500">
@@ -47,8 +43,6 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 };
-
 export default Footer;
