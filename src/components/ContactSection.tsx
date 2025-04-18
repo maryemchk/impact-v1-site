@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { Send, Mail, Instagram, Facebook, Github, Linkedin, Twitter } from 'lucide-react';
-
 const ContactSection = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -9,36 +8,44 @@ const ContactSection = () => {
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { toast } = useToast();
-
+  const {
+    toast
+  } = useToast();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    const {
+      name,
+      value
+    } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     // Play send sound
     const audio = new Audio('/send-sound.mp3');
     audio.volume = 0.3;
     audio.play().catch(err => console.log('Audio playback prevented:', err));
-    
+
     // Simulate form submission
     setTimeout(() => {
       toast({
         title: "Message Sent!",
         description: "We've received your message and will get back to you soon.",
-        variant: "default",
+        variant: "default"
       });
       setIsSubmitting(false);
-      setFormData({ name: '', email: '', message: '' });
+      setFormData({
+        name: '',
+        email: '',
+        message: ''
+      });
     }, 1500);
   };
-
-  return (
-    <section id="contact" className="section-padding relative">
+  return <section id="contact" className="section-padding relative">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-3xl md:text-4xl font-orbitron font-bold text-center mb-6 text-cyber-blue glow-text-blue">
           Contact Us
@@ -59,60 +66,31 @@ const ContactSection = () => {
                 <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-1">
                   Name
                 </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 bg-dark-gray border border-cyber-blue-glow rounded-sm focus:outline-none focus:ring-2 focus:ring-cyber-blue"
-                  style={{ boxShadow: "inset 0 0 5px rgba(0, 255, 255, 0.2)" }}
-                />
+                <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required className="w-full px-4 py-3 bg-dark-gray border border-cyber-blue-glow rounded-sm focus:outline-none focus:ring-2 focus:ring-cyber-blue" style={{
+                boxShadow: "inset 0 0 5px rgba(0, 255, 255, 0.2)"
+              }} />
               </div>
               
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1">
                   Email
                 </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 bg-dark-gray border border-cyber-blue-glow rounded-sm focus:outline-none focus:ring-2 focus:ring-cyber-blue"
-                  style={{ boxShadow: "inset 0 0 5px rgba(0, 255, 255, 0.2)" }}
-                />
+                <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required className="w-full px-4 py-3 bg-dark-gray border border-cyber-blue-glow rounded-sm focus:outline-none focus:ring-2 focus:ring-cyber-blue" style={{
+                boxShadow: "inset 0 0 5px rgba(0, 255, 255, 0.2)"
+              }} />
               </div>
               
               <div>
                 <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-1">
                   Message
                 </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  rows={4}
-                  className="w-full px-4 py-3 bg-dark-gray border border-cyber-blue-glow rounded-sm focus:outline-none focus:ring-2 focus:ring-cyber-blue"
-                  style={{ boxShadow: "inset 0 0 5px rgba(0, 255, 255, 0.2)" }}
-                />
+                <textarea id="message" name="message" value={formData.message} onChange={handleChange} required rows={4} className="w-full px-4 py-3 bg-dark-gray border border-cyber-blue-glow rounded-sm focus:outline-none focus:ring-2 focus:ring-cyber-blue" style={{
+                boxShadow: "inset 0 0 5px rgba(0, 255, 255, 0.2)"
+              }} />
               </div>
               
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="cyber-btn w-full rounded-sm flex items-center justify-center"
-              >
-                {isSubmitting ? (
-                  <span className="inline-block animate-spin mr-2">◌</span>
-                ) : (
-                  <Send className="h-5 w-5 mr-2" />
-                )}
+              <button type="submit" disabled={isSubmitting} className="cyber-btn w-full rounded-sm flex items-center justify-center">
+                {isSubmitting ? <span className="inline-block animate-spin mr-2">◌</span> : <Send className="h-5 w-5 mr-2" />}
                 {isSubmitting ? 'Sending...' : 'Send Message'}
               </button>
             </form>
@@ -170,16 +148,12 @@ const ContactSection = () => {
               </div>
               
               <div className="mt-6 pt-6 border-t border-cyber-purple-glow">
-                <p className="text-center text-sm text-gray-400">
-                  Organized by ARSII ISIMM - Association of Network and Information Systems Engineers
-                </p>
+                <p className="text-center text-sm text-gray-400">Organized by ARSII ISIMM - Association of Scientific Research and Innovation in Computer Science</p>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default ContactSection;
