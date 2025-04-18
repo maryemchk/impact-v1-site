@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { Trophy, Award, Gift } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+
 const PrizesSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -19,21 +20,23 @@ const PrizesSection = () => {
     containerRef.current.style.setProperty('--mouse-x', `${x}`);
     containerRef.current.style.setProperty('--mouse-y', `${y}`);
   };
+
   const prizes = [{
     id: 1,
     icon: <Trophy className="h-20 w-20 text-yellow-400 animate-float" />,
     title: "First Place",
     color: "cyber-blue",
     glow: "glow-text-blue",
-    rewards: ["🏆 1000 TND Cash Prize", "💻 Tech Goodies", "🚀 Special Recognition"]
+    rewards: ["1000 TND Cash Prize"]
   }, {
     id: 2,
     icon: <Award className="h-16 w-16 text-gray-300 animate-float" />,
     title: "Second Place",
     color: "cyber-green",
     glow: "glow-text-green",
-    rewards: ["🥈 500 TND Cash Prize", "🎖️ Special Award", "🌐 Networking Opportunity"]
+    rewards: ["500 TND Cash Prize"]
   }];
+
   return <section id="prizes" className="section-padding relative bg-dark-gray overflow-hidden">
       {/* Background effects */}
       <div className="absolute inset-0 opacity-20">
@@ -46,13 +49,13 @@ const PrizesSection = () => {
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-5xl font-orbitron font-bold mb-6 text-cyber-green glow-text-green inline-block">
             <span className="relative">
-              Prizes & Rewards
+              Cash Prizes
               <span className="absolute -bottom-2 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-cyber-green to-transparent"></span>
             </span>
           </h2>
           
           <p className="text-center text-xl max-w-3xl mx-auto">
-            Build Impact. Win Glory. Take home amazing prizes!
+            Compete and Win Amazing Cash Rewards!
           </p>
         </div>
         
@@ -119,18 +122,8 @@ const PrizesSection = () => {
               </div>)}
           </div>
         </div>
-        
-        {/* Additional rewards section */}
-        <div className="mt-16 text-center max-w-2xl mx-auto">
-          <h3 className="text-2xl font-orbitron text-cyber-blue glow-text-blue mb-6">Additional Rewards</h3>
-          <div className="cyber-card p-6 backdrop-blur-sm bg-darker-gray/70">
-            <div className="flex items-center justify-center mb-4">
-              <Gift className="h-8 w-8 text-cyber-purple mr-3" />
-              <p className="text-lg">All participants will receive certificates and valuable networking opportunities!</p>
-            </div>
-          </div>
-        </div>
       </div>
     </section>;
 };
+
 export default PrizesSection;
