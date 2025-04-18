@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Code, PenTool, Brain, Globe, Server, ExternalLink, ChevronDown, ChevronUp, Calendar, Clock, Users } from 'lucide-react';
 import { Button } from "@/components/ui/button";
@@ -6,80 +5,69 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { useIsMobile } from "@/hooks/use-mobile";
-
-const workshops = [
-  {
-    title: "Unlocking the Future: Web3 & Blockchain Essentials",
-    description: "Get started with the revolutionary world of Web3 and Blockchain! Understand the core principles and build your first decentralized mini-project. This workshop is your gateway to the next internet.",
-    details: "Participants will explore the fundamentals of blockchain technology, including distributed ledgers, consensus mechanisms, and smart contracts. You'll build and deploy a simple dApp on a testnet and learn about Web3 integration.",
-    prerequisites: "Basic programming knowledge. Familiarity with JavaScript is helpful but not required.",
-    instructor: "Alex Merkova",
-    capacity: "30 participants",
-    icon: <Globe className="h-12 w-12 text-cyber-blue" />,
-    time: "Session 1: 09:30 → 12:00",
-    date: "Saturday, April 19",
-    color: "cyber-blue"
-  },
-  {
-    title: "Design That Speaks: UI/UX Fundamentals",
-    description: "Learn the art of intuitive design and how to use tools like Figma to craft user-friendly interfaces. Whether you're a design newbie or curious techie, this workshop turns your ideas into interactive experiences.",
-    details: "This hands-on workshop covers the principles of user-centered design, wireframing, prototyping, and usability testing. You'll create a complete design for a mobile app interface using Figma.",
-    prerequisites: "No prior design experience needed. Bring a laptop with Figma installed.",
-    instructor: "Diana Chen",
-    capacity: "25 participants",
-    icon: <PenTool className="h-12 w-12 text-cyber-green" />,
-    time: "Session 1: 09:30 → 12:00",
-    date: "Saturday, April 19",
-    color: "cyber-green"
-  },
-  {
-    title: "Smarter Systems: AI-Powered Industry Solutions",
-    description: "Explore the power of Natural Language Processing (NLP) and predictive/generative AI. Build intelligent systems that understand, learn, and generate! The future of industry is AI—start building it today.",
-    details: "You'll get practical experience working with modern AI tools and frameworks. Topics include prompt engineering, fine-tuning language models, and integrating AI capabilities into applications.",
-    prerequisites: "Basic programming skills and understanding of data structures.",
-    instructor: "Dr. Omar Patel",
-    capacity: "35 participants",
-    icon: <Brain className="h-12 w-12 text-cyber-purple" />,
-    time: "Session 1: 09:30 → 12:00",
-    date: "Saturday, April 19",
-    color: "cyber-purple"
-  },
-  {
-    title: "Next-Gen Tech: Diving into the Hedera Ecosystem",
-    description: "Take a deep dive into the Hedera Hashgraph world—a powerful alternative to traditional blockchain. Learn how to build efficient and eco-friendly dApps with real-world impact. Speed. Security. Innovation.",
-    details: "This workshop covers Hedera's unique consensus algorithm, token service, smart contracts, and file service. You'll implement a simple application using Hedera SDK and understand the ecosystem's advantages.",
-    prerequisites: "Familiarity with blockchain concepts and JavaScript/TypeScript.",
-    instructor: "Tara Nakamoto",
-    capacity: "20 participants",
-    icon: <Server className="h-12 w-12 text-cyber-blue" />,
-    time: "Session 2: 13:30 → 15:30",
-    date: "Saturday, April 19",
-    color: "cyber-blue"
-  },
-  {
-    title: "Deep Dive into Deep Learning",
-    description: "From theory to practice, uncover the magic behind deep learning models. Train your own neural networks and understand how machines learn from data. No magic—just math, models, and mind-blowing results!",
-    details: "You'll implement neural networks from scratch, then use modern frameworks to train and deploy models. Topics include CNNs, RNNs, transfer learning, and model optimization techniques.",
-    prerequisites: "Python programming and basic linear algebra knowledge.",
-    instructor: "Prof. Nina Rodriguez",
-    capacity: "25 participants",
-    icon: <Code className="h-12 w-12 text-cyber-green" />,
-    time: "Session 2: 13:30 → 15:30",
-    date: "Saturday, April 19",
-    color: "cyber-green"
-  }
-];
-
+const workshops = [{
+  title: "Unlocking the Future: Web3 & Blockchain Essentials",
+  description: "Get started with the revolutionary world of Web3 and Blockchain! Understand the core principles and build your first decentralized mini-project. This workshop is your gateway to the next internet.",
+  details: "Participants will explore the fundamentals of blockchain technology, including distributed ledgers, consensus mechanisms, and smart contracts. You'll build and deploy a simple dApp on a testnet and learn about Web3 integration.",
+  prerequisites: "Basic programming knowledge. Familiarity with JavaScript is helpful but not required.",
+  instructor: "Alex Merkova",
+  capacity: "30 participants",
+  icon: <Globe className="h-12 w-12 text-cyber-blue" />,
+  time: "Session 1: 09:30 → 12:00",
+  date: "Saturday, April 19",
+  color: "cyber-blue"
+}, {
+  title: "Design That Speaks: UI/UX Fundamentals",
+  description: "Learn the art of intuitive design and how to use tools like Figma to craft user-friendly interfaces. Whether you're a design newbie or curious techie, this workshop turns your ideas into interactive experiences.",
+  details: "This hands-on workshop covers the principles of user-centered design, wireframing, prototyping, and usability testing. You'll create a complete design for a mobile app interface using Figma.",
+  prerequisites: "No prior design experience needed. Bring a laptop with Figma installed.",
+  instructor: "Diana Chen",
+  capacity: "25 participants",
+  icon: <PenTool className="h-12 w-12 text-cyber-green" />,
+  time: "Session 1: 09:30 → 12:00",
+  date: "Saturday, April 19",
+  color: "cyber-green"
+}, {
+  title: "Smarter Systems: AI-Powered Industry Solutions",
+  description: "Explore the power of Natural Language Processing (NLP) and predictive/generative AI. Build intelligent systems that understand, learn, and generate! The future of industry is AI—start building it today.",
+  details: "You'll get practical experience working with modern AI tools and frameworks. Topics include prompt engineering, fine-tuning language models, and integrating AI capabilities into applications.",
+  prerequisites: "Basic programming skills and understanding of data structures.",
+  instructor: "Dr. Omar Patel",
+  capacity: "35 participants",
+  icon: <Brain className="h-12 w-12 text-cyber-purple" />,
+  time: "Session 1: 09:30 → 12:00",
+  date: "Saturday, April 19",
+  color: "cyber-purple"
+}, {
+  title: "Next-Gen Tech: Diving into the Hedera Ecosystem",
+  description: "Take a deep dive into the Hedera Hashgraph world—a powerful alternative to traditional blockchain. Learn how to build efficient and eco-friendly dApps with real-world impact. Speed. Security. Innovation.",
+  details: "This workshop covers Hedera's unique consensus algorithm, token service, smart contracts, and file service. You'll implement a simple application using Hedera SDK and understand the ecosystem's advantages.",
+  prerequisites: "Familiarity with blockchain concepts and JavaScript/TypeScript.",
+  instructor: "Tara Nakamoto",
+  capacity: "20 participants",
+  icon: <Server className="h-12 w-12 text-cyber-blue" />,
+  time: "Session 2: 13:30 → 15:30",
+  date: "Saturday, April 19",
+  color: "cyber-blue"
+}, {
+  title: "Deep Dive into Deep Learning",
+  description: "From theory to practice, uncover the magic behind deep learning models. Train your own neural networks and understand how machines learn from data. No magic—just math, models, and mind-blowing results!",
+  details: "You'll implement neural networks from scratch, then use modern frameworks to train and deploy models. Topics include CNNs, RNNs, transfer learning, and model optimization techniques.",
+  prerequisites: "Python programming and basic linear algebra knowledge.",
+  instructor: "Prof. Nina Rodriguez",
+  capacity: "25 participants",
+  icon: <Code className="h-12 w-12 text-cyber-green" />,
+  time: "Session 2: 13:30 → 15:30",
+  date: "Saturday, April 19",
+  color: "cyber-green"
+}];
 const WorkshopsPreview = () => {
   const isMobile = useIsMobile();
   const [expandedWorkshop, setExpandedWorkshop] = useState<number | null>(null);
-  
   const toggleExpand = (index: number) => {
     setExpandedWorkshop(expandedWorkshop === index ? null : index);
   };
-
-  return (
-    <section id="workshops" className="section-padding relative bg-darker-gray overflow-hidden">
+  return <section id="workshops" className="section-padding relative bg-darker-gray overflow-hidden">
       {/* Background decorative elements */}
       <div className="absolute inset-0 bg-cyber-grid bg-[length:40px_40px] opacity-20"></div>
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyber-blue via-cyber-green to-cyber-purple"></div>
@@ -117,11 +105,7 @@ const WorkshopsPreview = () => {
         
         {/* Workshop cards with enhanced visual design */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {workshops.map((workshop, index) => (
-            <Card 
-              key={index}
-              className={`cyber-card relative border-${workshop.color} overflow-visible group h-full`}
-            >
+          {workshops.map((workshop, index) => <Card key={index} className={`cyber-card relative border-${workshop.color} overflow-visible group h-full`}>
               {/* Glowing corner accents */}
               <div className={`absolute -top-1 -left-1 w-4 h-4 border-t-2 border-l-2 border-${workshop.color} opacity-70 group-hover:opacity-100 transition-opacity`}></div>
               <div className={`absolute -top-1 -right-1 w-4 h-4 border-t-2 border-r-2 border-${workshop.color} opacity-70 group-hover:opacity-100 transition-opacity`}></div>
@@ -149,22 +133,11 @@ const WorkshopsPreview = () => {
                 <p className="text-gray-300 mb-4 flex-grow">{workshop.description}</p>
                 
                 {/* Expandable details section */}
-                <Collapsible 
-                  open={expandedWorkshop === index}
-                  onOpenChange={() => toggleExpand(index)}
-                  className="w-full"
-                >
+                <Collapsible open={expandedWorkshop === index} onOpenChange={() => toggleExpand(index)} className="w-full">
                   <CollapsibleTrigger asChild>
-                    <Button 
-                      variant="ghost" 
-                      className={`w-full border border-${workshop.color}/30 flex items-center justify-between group-hover:bg-${workshop.color}/10 transition-colors`}
-                    >
+                    <Button variant="ghost" className={`w-full border border-${workshop.color}/30 flex items-center justify-between group-hover:bg-${workshop.color}/10 transition-colors`}>
                       <span>Workshop Details</span>
-                      {expandedWorkshop === index ? (
-                        <ChevronUp className="h-4 w-4" />
-                      ) : (
-                        <ChevronDown className="h-4 w-4" />
-                      )}
+                      {expandedWorkshop === index ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
                     </Button>
                   </CollapsibleTrigger>
                   
@@ -192,63 +165,16 @@ const WorkshopsPreview = () => {
                   </CollapsibleContent>
                 </Collapsible>
               </CardContent>
-            </Card>
-          ))}
+            </Card>)}
         </div>
 
         {/* Enhanced registration section */}
         <div className="mt-16 relative">
           <div className="absolute inset-0 bg-gradient-to-r from-cyber-blue/10 via-cyber-purple/10 to-cyber-green/10 blur-xl"></div>
           
-          <div className="relative p-8 border border-white/10 rounded-lg bg-dark-gray/80 backdrop-blur-md">
-            <div className="max-w-3xl mx-auto text-center">
-              <h3 className="text-2xl md:text-3xl font-orbitron font-bold mb-6 text-white">
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyber-blue to-cyber-green">
-                  Ready to Join Our Workshops?
-                </span>
-              </h3>
-              
-              <p className="text-gray-300 mb-8">
-                Secure your spot now! Workshops have limited capacity and are available on a first-come, first-served basis. 
-                <br className="hidden md:block" />
-                Registration is free for all hackathon participants.
-              </p>
-              
-              <div className="flex flex-col sm:flex-row justify-center gap-4">
-                <HoverCard>
-                  <HoverCardTrigger asChild>
-                    <a 
-                      href="https://docs.google.com/forms/d/1DTEN7H4ZPSKW0BXuoXgYEP0iBi4wXoftA733AW26nZs/viewform?edit_requested=true" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="transform transition-all duration-300 group"
-                    >
-                      <Button className="cyber-btn flex items-center gap-2 bg-cyber-green hover:bg-cyber-green/80 border-cyber-green text-white text-lg px-8 py-6 sm:px-10 sm:py-8 shadow-lg shadow-cyber-green/20 relative overflow-hidden group w-full sm:w-auto">
-                        <span className="relative z-10 flex items-center font-bold">
-                          REGISTER NOW
-                          <ExternalLink className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" />
-                        </span>
-                        <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300"></span>
-                      </Button>
-                    </a>
-                  </HoverCardTrigger>
-                  <HoverCardContent className="w-72 bg-dark-gray border border-cyber-green/50 shadow-lg shadow-cyber-green/20 p-4">
-                    <p className="text-sm text-gray-300">
-                      Complete the registration form to secure your spot in your preferred workshops. You'll receive a confirmation email with all details.
-                    </p>
-                  </HoverCardContent>
-                </HoverCard>
-                
-                <Button variant="outline" className="border-cyber-blue text-cyber-blue hover:bg-cyber-blue/10 px-8 py-6 sm:px-10 sm:py-8">
-                  <span className="font-bold">VIEW FULL SCHEDULE</span>
-                </Button>
-              </div>
-            </div>
-          </div>
+          
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default WorkshopsPreview;
