@@ -1,199 +1,196 @@
 
-import React, { useState } from 'react';
-import { Brain, ShieldAlert, Award, Code, BadgeCheck, Trophy, Clock, Users, Target } from 'lucide-react';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { Card, CardContent } from "@/components/ui/card";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import React from 'react';
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+} from "@/components/ui/card";
+import { Brain, ShieldCheck, Users, Clock, Medal, Cpu, Code, CheckCircle2, ExternalLink } from 'lucide-react';
 
 interface Challenge {
   id: number;
   title: string;
-  description: string;
   icon: React.ReactNode;
-  category: string;
-  difficulty: 'Easy' | 'Medium' | 'Hard';
-  color: string;
-  details?: string[];
-  requirements?: string[];
+  difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
+  description: string;
+  requirements: string[];
+  rewards: string[];
+  tools: string[];
 }
 
-const challenges: Challenge[] = [{
-  id: 1,
-  title: "AI for Social Good",
-  description: "Develop an AI solution that addresses a pressing social issue or improves public services.",
-  icon: <Brain className="h-8 w-8" />,
-  category: "AI/ML",
-  difficulty: "Hard",
-  color: "cyber-purple",
-  details: [
-    "Create an AI application that can help solve problems in healthcare, education, environment, or public safety",
-    "Implement at least one machine learning or deep learning model",
-    "Provide an intuitive user interface for interacting with your AI solution",
-    "Consider accessibility and inclusivity in your design"
-  ],
-  requirements: [
-    "Must use a modern AI/ML framework (TensorFlow, PyTorch, Hugging Face, etc.)",
-    "Should include a front-end interface built with React",
-    "Data privacy considerations must be addressed",
-    "Deployment strategy should be included"
-  ]
-}, {
-  id: 2,
-  title: "Cybersecurity Innovation",
-  description: "Build a solution that improves digital security for individuals, businesses, or services.",
-  icon: <ShieldAlert className="h-8 w-8" />,
-  category: "Cybersecurity",
-  difficulty: "Medium",
-  color: "cyber-blue",
-  details: [
-    "Develop a tool for threat detection, vulnerability assessment, or security education",
-    "Focus on addressing a specific security challenge (e.g., phishing detection, secure authentication)",
-    "Create an accessible interface for technical and non-technical users",
-    "Include comprehensive reporting or visualization of security insights"
-  ],
-  requirements: [
-    "Must implement secure coding practices and follow security best practices",
-    "Should include both frontend and backend components",
-    "Real-time monitoring or notification features are encouraged",
-    "Documentation on security architecture must be provided"
-  ]
-}];
+const challenges: Challenge[] = [
+  {
+    id: 1,
+    title: "AI Innovation Challenge",
+    icon: <Brain className="h-8 w-8 text-primary" />,
+    difficulty: "Advanced",
+    description: "Build an innovative AI solution that addresses real-world challenges in healthcare, education, or environmental sustainability.",
+    requirements: [
+      "Implement machine learning or deep learning models",
+      "Create a user-friendly interface",
+      "Include data visualization components",
+      "Provide clear documentation",
+    ],
+    rewards: [
+      "First Prize: $5,000",
+      "AI Development Kit",
+      "Cloud Credits worth $2,000",
+      "1:1 Mentorship with Industry Experts"
+    ],
+    tools: [
+      "TensorFlow/PyTorch",
+      "Cloud Computing Platform",
+      "Modern Web Framework",
+    ]
+  },
+  {
+    id: 2,
+    title: "Cybersecurity Challenge",
+    icon: <ShieldCheck className="h-8 w-8 text-primary" />,
+    difficulty: "Intermediate",
+    description: "Create an innovative security solution for threat detection, secure authentication, or cybersecurity education.",
+    requirements: [
+      "Implement secure coding practices",
+      "Create real-time monitoring features",
+      "Include comprehensive security reporting",
+      "Focus on user privacy and data protection"
+    ],
+    rewards: [
+      "First Prize: $4,000",
+      "Security Tools License",
+      "Cloud Credits worth $1,500",
+      "Security Certification Voucher"
+    ],
+    tools: [
+      "Security Testing Tools",
+      "Cloud Security Services",
+      "Authentication Framework"
+    ]
+  }
+];
 
-const HackathonChallenges = () => {
-  const [expandedChallenge, setExpandedChallenge] = useState<number | null>(null);
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
-
-  const handleCardHover = (id: number | null) => {
-    setHoveredCard(id);
-  };
-
-  const toggleExpand = (id: number) => {
-    setExpandedChallenge(expandedChallenge === id ? null : id);
-  };
+const ChallengeCard = ({ challenge }: { challenge: Challenge }) => {
+  const difficultyColor = {
+    Beginner: 'text-emerald-400',
+    Intermediate: 'text-blue-400',
+    Advanced: 'text-purple-400'
+  }[challenge.difficulty];
 
   return (
-    <section className="section-padding relative overflow-hidden">
-      <div className="absolute inset-0 opacity-20 pointer-events-none">
-        <div className="absolute top-0 left-0 w-full h-full circuit-background"></div>
-        <div className="absolute top-10 left-10 w-16 h-16 bg-cyber-blue rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-40 right-20 w-32 h-32 bg-cyber-purple rounded-full blur-3xl animate-[pulse_4s_infinite]"></div>
-      </div>
-      
-      <div className="max-w-6xl mx-auto relative z-10">
-        <h2 className="text-4xl md:text-5xl font-orbitron font-bold text-center mb-4 text-cyber-purple glow-text-purple">
-          Hackathon Challenges
-        </h2>
-        
-        <div className="flex items-center justify-center gap-4 mb-8">
-          <div className="flex items-center">
-            <Clock className="h-5 w-5 text-cyber-blue mr-2" />
-            <span className="text-gray-300">48 Hours</span>
-          </div>
-          <div className="flex items-center">
-            <Users className="h-5 w-5 text-cyber-purple mr-2" />
-            <span className="text-gray-300">2-4 Team Members</span>
-          </div>
-          <div className="flex items-center">
-            <Target className="h-5 w-5 text-cyber-green mr-2" />
-            <span className="text-gray-300">Win Amazing Prizes</span>
-          </div>
-        </div>
-        
-        <p className="text-center text-xl mb-12 max-w-3xl mx-auto leading-relaxed text-gray-300">
-          Choose your challenge and showcase your innovation. Each challenge offers unique opportunities to demonstrate your technical expertise and creativity.
-        </p>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {challenges.map(challenge => (
-            <Collapsible 
-              key={challenge.id} 
-              className={`cyber-card transform transition-all duration-500 ${
-                hoveredCard === challenge.id ? 'scale-105' : ''
-              } ${challenge.color === 'cyber-blue' ? '' : 'cyber-card-purple'}`}
-              onMouseEnter={() => handleCardHover(challenge.id)}
-              onMouseLeave={() => handleCardHover(null)}
-              open={expandedChallenge === challenge.id}
-              onOpenChange={() => toggleExpand(challenge.id)}
-            >
-              <div className="p-6 glass-effect">
-                <div className={`flex items-center mb-4 text-${challenge.color}`}>
-                  {challenge.icon}
-                  <div className="ml-3 text-sm font-semibold">{challenge.category}</div>
-                  <Tooltip>
-                    <TooltipTrigger>
-                      <div className={`ml-auto px-3 py-1 text-xs rounded-full ${
-                        challenge.difficulty === 'Easy' 
-                          ? 'bg-cyber-green/20 text-cyber-green' 
-                          : challenge.difficulty === 'Medium' 
-                          ? 'bg-cyber-blue/20 text-cyber-blue' 
-                          : 'bg-cyber-purple/20 text-cyber-purple'
-                      }`}>
-                        {challenge.difficulty}
-                      </div>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Challenge Difficulty Level</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </div>
-                
-                <CollapsibleTrigger className="w-full text-left">
-                  <h3 className={`text-2xl font-orbitron font-bold mb-3 text-${challenge.color} flex items-center group`}>
-                    {challenge.title}
-                    <Award className={`ml-2 h-5 w-5 text-${challenge.color} transition-transform duration-300 group-hover:rotate-12`} />
-                  </h3>
-                </CollapsibleTrigger>
-                
-                <p className="text-gray-300 mb-4 text-lg">
-                  {challenge.description}
-                </p>
-                
-                <CollapsibleContent>
-                  <div className="mt-6 space-y-6 border-t border-gray-700/50 pt-6">
-                    <div className="bg-darker-gray/50 p-4 rounded-lg backdrop-blur-sm">
-                      <h4 className={`font-orbitron text-${challenge.color} text-lg mb-4 flex items-center`}>
-                        <Code className="h-5 w-5 mr-2" /> Challenge Details
-                      </h4>
-                      <ul className="space-y-3 text-gray-300">
-                        {challenge.details?.map((detail, index) => (
-                          <li key={index} className="flex items-start bg-dark-gray/30 p-3 rounded">
-                            <span className={`text-${challenge.color} mr-2 shrink-0`}>•</span>
-                            <span>{detail}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    
-                    <div className="bg-darker-gray/50 p-4 rounded-lg backdrop-blur-sm">
-                      <h4 className={`font-orbitron text-${challenge.color} text-lg mb-4 flex items-center`}>
-                        <BadgeCheck className="h-5 w-5 mr-2" /> Technical Requirements
-                      </h4>
-                      <ul className="space-y-3 text-gray-300">
-                        {challenge.requirements?.map((req, index) => (
-                          <li key={index} className="flex items-start bg-dark-gray/30 p-3 rounded">
-                            <span className={`text-${challenge.color} mr-2 shrink-0`}>✓</span>
-                            <span>{req}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </CollapsibleContent>
+    <Card className="group relative overflow-hidden border-2 border-muted backdrop-blur-sm transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5">
+      <CardContent className="space-y-6 p-6">
+        <div className="flex items-start justify-between gap-4">
+          <div className="flex items-center gap-3">
+            {challenge.icon}
+            <div>
+              <h3 className="text-2xl font-bold tracking-tight text-primary">
+                {challenge.title}
+              </h3>
+              <div className="flex items-center gap-2 text-sm">
+                <span className={`font-semibold ${difficultyColor}`}>
+                  {challenge.difficulty}
+                </span>
+                <span className="text-muted-foreground">•</span>
+                <span className="flex items-center gap-1 text-muted-foreground">
+                  <Users className="h-3.5 w-3.5" />
+                  2-4 Team Members
+                </span>
               </div>
-            </Collapsible>
-          ))}
+            </div>
+          </div>
         </div>
 
-        <div className="mt-12 text-center">
-          <Card className="border-cyber-purple/30 bg-dark-gray/50 backdrop-blur-sm">
-            <CardContent className="p-8">
-              <Trophy className="h-12 w-12 mx-auto mb-4 text-cyber-gold animate-bounce" />
-              <h3 className="text-2xl font-orbitron font-bold mb-3 text-cyber-purple">Prize Pool</h3>
-              <p className="text-gray-300 text-lg">
-                Compete for exciting prizes and recognition in the tech community!
-              </p>
-            </CardContent>
-          </Card>
+        <p className="text-muted-foreground">{challenge.description}</p>
+
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 font-semibold">
+              <CheckCircle2 className="h-4 w-4 text-primary" />
+              Requirements
+            </div>
+            <ul className="grid gap-2 text-sm text-muted-foreground">
+              {challenge.requirements.map((req, index) => (
+                <li key={index} className="flex items-center gap-2">
+                  <div className="h-1 w-1 rounded-full bg-muted-foreground/50" />
+                  {req}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 font-semibold">
+              <Medal className="h-4 w-4 text-primary" />
+              Rewards
+            </div>
+            <ul className="grid gap-2 text-sm text-muted-foreground">
+              {challenge.rewards.map((reward, index) => (
+                <li key={index} className="flex items-center gap-2">
+                  <div className="h-1 w-1 rounded-full bg-muted-foreground/50" />
+                  {reward}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 font-semibold">
+              <Cpu className="h-4 w-4 text-primary" />
+              Recommended Tools
+            </div>
+            <ul className="flex flex-wrap gap-2">
+              {challenge.tools.map((tool, index) => (
+                <li
+                  key={index}
+                  className="rounded-full border border-border bg-muted/50 px-3 py-1 text-xs text
+-muted-foreground"
+                >
+                  {tool}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
+
+const HackathonChallenges = () => {
+  return (
+    <section className="relative overflow-hidden py-20">
+      <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_110%)]" />
+      <div className="container relative space-y-12">
+        <div className="mx-auto max-w-3xl space-y-6 text-center">
+          <div className="space-y-4">
+            <h2 className="bg-gradient-to-r from-primary/60 to-primary bg-clip-text font-orbitron text-4xl font-bold tracking-tight text-transparent sm:text-5xl">
+              Hackathon Challenges
+            </h2>
+            <div className="flex items-center justify-center gap-6 text-sm text-muted-foreground">
+              <div className="flex items-center gap-2">
+                <Clock className="h-4 w-4" />
+                48 Hours
+              </div>
+              <div className="flex items-center gap-2">
+                <Medal className="h-4 w-4" />
+                $10,000 Prize Pool
+              </div>
+              <div className="flex items-center gap-2">
+                <Code className="h-4 w-4" />
+                2 Challenges
+              </div>
+            </div>
+            <p className="text-muted-foreground">
+              Choose your challenge and showcase your innovation. Work in teams of 2-4 to build solutions
+              that can make a real impact. Join us in pushing the boundaries of technology.
+            </p>
+          </div>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2">
+          {challenges.map((challenge) => (
+            <ChallengeCard key={challenge.id} challenge={challenge} />
+          ))}
         </div>
       </div>
     </section>
@@ -201,4 +198,3 @@ const HackathonChallenges = () => {
 };
 
 export default HackathonChallenges;
-
