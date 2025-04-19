@@ -1,14 +1,14 @@
+
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Brain, Heart, Factory, FileCheck, Video, Code, Presentation, ListChecks, Lightbulb, Cpu, Database, Smartphone } from 'lucide-react';
+import { Brain, Heart, Factory, FileCheck, Video, Code, Presentation, ListChecks, Lightbulb } from 'lucide-react';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Badge } from "@/components/ui/badge";
 
 interface Challenge {
   id: number;
@@ -16,7 +16,6 @@ interface Challenge {
   icon: React.ReactNode;
   description: string;
   theme: string;
-  technologies: string[];
 }
 
 const challenges: Challenge[] = [
@@ -25,16 +24,14 @@ const challenges: Challenge[] = [
     title: "AI & Healthcare Innovation",
     icon: <Heart className="h-8 w-8 text-primary" />,
     theme: "Healthcare",
-    technologies: ["Artificial Intelligence", "Machine Learning", "Data Analytics"],
-    description: "Address a current issue, either local or global, in the field of medicine, paramedicine, or public health using cutting-edge AI technologies."
+    description: "Address a current issue, either local or global, in the field of medicine, paramedicine, or public health using AI and cutting-edge technologies."
   },
   {
     id: 2,
     title: "AI & Industry Innovation",
     icon: <Factory className="h-8 w-8 text-primary" />,
     theme: "Industry",
-    technologies: ["Internet of Things", "Blockchain", "AI/ML"],
-    description: "Tackle a major challenge in the areas of production, logistics, maintenance, quality, safety, or energy management using innovative technologies."
+    description: "Tackle a major challenge in the areas of production, logistics, maintenance, quality, safety, or energy management using AI and innovative technologies."
   }
 ];
 
@@ -74,20 +71,6 @@ const evaluationCriteria = [
   "Potential impact"
 ];
 
-const TechnologyIcon = ({ tech }: { tech: string }) => {
-  switch (tech.toLowerCase()) {
-    case 'artificial intelligence':
-    case 'ai/ml':
-      return <Brain className="h-4 w-4" />;
-    case 'blockchain':
-      return <Database className="h-4 w-4" />;
-    case 'internet of things':
-      return <Smartphone className="h-4 w-4" />;
-    default:
-      return <Cpu className="h-4 w-4" />;
-  }
-};
-
 const ChallengeCard = ({ challenge }: { challenge: Challenge }) => {
   return (
     <Card className="group relative overflow-hidden border-2 border-muted backdrop-blur-sm transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5">
@@ -100,19 +83,7 @@ const ChallengeCard = ({ challenge }: { challenge: Challenge }) => {
             <h3 className="text-2xl font-bold tracking-tight text-primary">
               {challenge.title}
             </h3>
-            <div className="mt-2 flex flex-wrap gap-2">
-              {challenge.technologies.map((tech, index) => (
-                <Badge
-                  key={index}
-                  variant="outline"
-                  className="flex items-center gap-1 bg-primary/5 text-primary"
-                >
-                  <TechnologyIcon tech={tech} />
-                  {tech}
-                </Badge>
-              ))}
-            </div>
-            <p className="mt-3 text-muted-foreground">{challenge.description}</p>
+            <p className="mt-2 text-muted-foreground">{challenge.description}</p>
           </div>
         </div>
       </CardContent>
