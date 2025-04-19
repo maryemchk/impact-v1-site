@@ -2,7 +2,7 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Brain, Heart, Factory, FileCheck, Video, Code, PresentationScreen, ListChecks, Lightbulb } from 'lucide-react';
+import { Brain, Heart, Factory, FileCheck, Video, Code, Presentation, ListChecks, Lightbulb } from 'lucide-react';
 import {
   Accordion,
   AccordionContent,
@@ -37,7 +37,7 @@ const challenges: Challenge[] = [
 
 const deliverables = [
   {
-    icon: <PresentationScreen />,
+    icon: <Presentation />,
     title: "Presentation (10-20 slides)",
     items: [
       "Project title and team members",
